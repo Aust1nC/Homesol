@@ -7,9 +7,18 @@ import { HeaderComponent } from './components/header/header.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeroComponent } from './pages/home/components/hero/hero.component';
+import { AboutComponent } from './pages/home/components/about/about.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    FooterComponent,
+    HeroComponent,
+    AboutComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
