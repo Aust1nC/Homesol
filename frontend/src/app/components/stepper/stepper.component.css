@@ -1,3 +1,16 @@
 .steps .step::before {
   height: 4px;
 }
+
+.steps .step::after {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: auto;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-rows: 40px 1fr;
+  place-items: center;
+  text-align: center;
+  border: 3px solid #55ccf8; /* Use currentColor to inherit text color */
+  border-radius: 9999px; /* Fully rounded */
+  background-color: transparent;
+}
