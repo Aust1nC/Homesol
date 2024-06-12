@@ -10,7 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeroComponent } from './pages/home/components/hero/hero.component';
 import { AboutComponent } from './pages/home/components/about/about.component';
 import { SelectComponent } from './pages/select/select.component';
-import { StepsComponent } from './components/steps/steps.component';
+import { stepperComponent } from './components/stepper/stepper.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { StepsComponent } from './components/steps/steps.component';
     HeroComponent,
     AboutComponent,
     SelectComponent,
-    StepsComponent,
+    stepperComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideAnimationsAsync()],
