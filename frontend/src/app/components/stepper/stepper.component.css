@@ -10,7 +10,7 @@
   grid-template-rows: 40px 1fr;
   place-items: center;
   text-align: center;
-  border: 3px solid #55ccf8; /* Use currentColor to inherit text color */
-  border-radius: 9999px; /* Fully rounded */
-  background-color: transparent;
+  border: 3px solid #55ccf8;
+  border-radius: 9999px;
+  background-color: white;
 }
