@@ -7,7 +7,7 @@
 <!-- Title end -->
 
 <div
-  class="mt-12 flex flex-col md:flex-row gap-4 lg:text-start lg:justify-between"
+  class="mt-12 flex flex-col gap-6 md:gap-3 md:flex-row lg:text-start lg:justify-between"
 >
   <!-- Slider start -->
   <div class="space-y-4 max-w-sm text-center sm:text-left mx-auto">
@@ -33,12 +33,12 @@
     <!-- Option start -->
     <h2 class="text-xl">What do you need?</h2>
 
-    <div class="grid gap-y-6">
+    <div class="grid md:gap-y-14 gap-y-8">
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
       >
         <img src="Tech.png" width="60px" class="ms-6" />
-        <div class="card-body ms-2 p-5">
+        <div class="card-body ms-2 p-5 text-start">
           <h2 class="card-title">Technology kit</h2>
           <p class="text-sm">
             Essential devices for your productivity and entertainment
@@ -46,10 +46,10 @@
         </div>
       </div>
       <div
-        class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer outline outline-[#55ccf8]"
+        class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
       >
         <img src="Appliance.png" width="60px" class="ms-6" />
-        <div class="card-body ms-2 p-5">
+        <div class="card-body ms-2 p-5 text-start">
           <h2 class="card-title">Appliances kit</h2>
           <p class="text-sm">
             Everything you need to keep your new life functioning
@@ -60,7 +60,7 @@
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
       >
         <img src="Kitchen.png" width="60px" class="ms-6" />
-        <div class="card-body ms-2 p-5">
+        <div class="card-body ms-2 p-5 text-start">
           <h2 class="card-title">Kitchen kit</h2>
           <p class="text-sm">
             Necessary tools at your fingertips to create delicious meals
@@ -71,19 +71,108 @@
     <!-- Option End -->
   </div>
 
-  <!-- Card Placeholder-->
-  <div class="card w-96 bg-base-100 shadow-xl mx-auto">
-    <figure>
-      <img
-        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-        alt="Shoes"
-      />
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title">Placeholder--!</h2>
-      <p>If a dog chews shoes whose shoes does he choose?</p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Buy Now</button>
+  <!-- Kit Info -->
+  <div
+    class="card w-4/5 sm:w-3/5 md:w-2/5 h-auto md:h-[500px] mx-auto bg-[#DAF1FD] rounded-md"
+  >
+    <div class="pl-9 pt-9">
+      <h1 class="text-3xl">In your kit</h1>
+    </div>
+    <div class="card-body gap-7">
+      <div class="flex flex-row justify-between items-center">
+        <h3 class="text-lg font-normal">Vacuum cleaner</h3>
+        <div
+          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
+        >
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+          >
+            -
+          </button>
+          <span class="font-bold">1</span>
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+        <h3 class="text-lg font-normal">Electric kettle</h3>
+        <div
+          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
+        >
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+          >
+            -
+          </button>
+          <span class="font-bold">1</span>
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+        <h3 class="text-lg font-normal">Rice cooker</h3>
+        <div
+          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
+        >
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+          >
+            -
+          </button>
+          <span class="font-bold">1</span>
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+        <h3 class="text-lg font-normal">Hair dryer</h3>
+        <div
+          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
+        >
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+          >
+            -
+          </button>
+          <span class="font-bold">1</span>
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+        <h3 class="text-lg font-normal">Desk lamp</h3>
+        <div
+          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
+        >
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+          >
+            -
+          </button>
+          <span class="font-bold">1</span>
+          <button
+            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <hr class="border-[#8F9EA3] border-t-2" />
+      <div class="flex flex-row justify-between items-center">
+        <h1 class="text-3xl">Total</h1>
+        <h1 class="text-3xl">$35</h1>
       </div>
     </div>
   </div>
