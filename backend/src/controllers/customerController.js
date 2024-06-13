@@ -7,7 +7,7 @@ let CustomerController = {
       let found = await CustomerModel.find();
       res.json(found);
     } catch (error) {
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ message: error.message });
     }
   },
 
@@ -19,7 +19,7 @@ let CustomerController = {
       }
       res.json(found);
     } catch (error) {
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ message: error.message });
     }
   },
 
@@ -30,7 +30,7 @@ let CustomerController = {
       res.status(201).json(savedCustomer);
     } catch (error) {
       res.status(409).send({
-        error: error.message,
+        message: error.message,
       });
     }
   },
@@ -50,7 +50,7 @@ let CustomerController = {
   //       res.status(404).send({ message: "Data not found" });
   //     }
   //   } catch (error) {
-  //     res.status(500).send({ error: error.message });
+  //     res.status(500).send({ message: error.message });
   //   }
   // },
 
@@ -63,7 +63,7 @@ let CustomerController = {
       }
       res.json({ message: "Customer deleted." });
     } catch (error) {
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ message: error.message });
     }
   },
 };
