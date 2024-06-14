@@ -14,7 +14,7 @@
     <h2 class="text-xl">How long do you need your items?</h2>
     <div class="flex items-center mt-4">
       <div class="flex-none items-start text-center text-[#55ccf8]">
-        <h2 class="text-3xl font-normal">12</h2>
+        <h2 class="text-3xl font-normal">{{ subDuration }}</h2>
         <h2>Months</h2>
       </div>
       <div class="flex-1 flex items-center justify-center ml-8">
@@ -22,9 +22,10 @@
           type="range"
           min="1"
           max="24"
-          value="12"
+          [value]="subDuration"
           step="1"
           class="w-full range"
+          (input)="onDuration($event)"
         />
       </div>
     </div>
@@ -36,6 +37,8 @@
     <div class="grid md:gap-y-14 gap-y-8">
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
+        (click)="onSelectKit('technology')"
+        [class.outlined]="selectedKit === 'technology'"
       >
         <img src="Tech.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -47,6 +50,8 @@
       </div>
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
+        (click)="onSelectKit('appliance')"
+        [class.outlined]="selectedKit === 'appliance'"
       >
         <img src="Appliance.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -58,6 +63,8 @@
       </div>
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
+        (click)="onSelectKit('kitchen')"
+        [class.outlined]="selectedKit === 'kitchen'"
       >
         <img src="Kitchen.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -73,14 +80,17 @@
 
   <!-- Kit Info -->
   <div
-    class="card w-4/5 sm:w-3/5 md:w-2/5 h-auto md:h-[500px] mx-auto bg-[#DAF1FD] rounded-md"
+    class="card w-4/5 sm:w-3/5 md:w-2/5 h-auto md:h-max mx-auto bg-[#DAF1FD] rounded-md"
   >
     <div class="pl-9 pt-9">
       <h1 class="text-3xl">In your kit</h1>
     </div>
     <div class="card-body gap-7">
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="text-lg font-normal">Vacuum cleaner</h3>
+      <div
+        class="flex flex-row justify-between items-center"
+        *ngFor="let product of kitItems"
+      >
+        <h3 class="text-lg font-normal">{{ product.name }}</h3>
         <div
           class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
         >
@@ -97,78 +107,7 @@
           </button>
         </div>
       </div>
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="text-lg font-normal">Electric kettle</h3>
-        <div
-          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
-        >
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
-          >
-            -
-          </button>
-          <span class="font-bold">1</span>
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="text-lg font-normal">Rice cooker</h3>
-        <div
-          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
-        >
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
-          >
-            -
-          </button>
-          <span class="font-bold">1</span>
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="text-lg font-normal">Hair dryer</h3>
-        <div
-          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
-        >
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
-          >
-            -
-          </button>
-          <span class="font-bold">1</span>
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="text-lg font-normal">Desk lamp</h3>
-        <div
-          class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
-        >
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
-          >
-            -
-          </button>
-          <span class="font-bold">1</span>
-          <button
-            class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div>
+
       <hr class="border-[#8F9EA3] border-t-2" />
       <div class="flex flex-row justify-between items-center">
         <h1 class="text-3xl">Total</h1>
