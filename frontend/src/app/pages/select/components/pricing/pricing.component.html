@@ -14,7 +14,7 @@
     <h2 class="text-xl">How long do you need your items?</h2>
     <div class="flex items-center mt-4">
       <div class="flex-none items-start text-center text-[#55ccf8]">
-        <h2 class="text-3xl font-normal">{{ subDuration }}</h2>
+        <h2 class="text-3xl font-normal">{{ rentalDuration }}</h2>
         <h2>Months</h2>
       </div>
       <div class="flex-1 flex items-center justify-center ml-8">
@@ -22,7 +22,7 @@
           type="range"
           min="1"
           max="24"
-          [value]="subDuration"
+          [value]="rentalDuration"
           step="1"
           class="w-full range"
           (input)="onDuration($event)"
@@ -38,7 +38,7 @@
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
         (click)="onSelectKit('technology')"
-        [class.outlined]="selectedKit === 'technology'"
+        [class.outlined]="category === 'technology'"
       >
         <img src="Tech.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -51,7 +51,7 @@
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
         (click)="onSelectKit('appliance')"
-        [class.outlined]="selectedKit === 'appliance'"
+        [class.outlined]="category === 'appliance'"
       >
         <img src="Appliance.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -64,7 +64,7 @@
       <div
         class="card card-side rounded-lg flex items-center justify-between bg-[#F8F8F8] cursor-pointer"
         (click)="onSelectKit('kitchen')"
-        [class.outlined]="selectedKit === 'kitchen'"
+        [class.outlined]="category === 'kitchen'"
       >
         <img src="Kitchen.png" width="60px" class="ms-6" />
         <div class="card-body ms-2 p-5 text-start">
@@ -88,20 +88,22 @@
     <div class="card-body gap-7">
       <div
         class="flex flex-row justify-between items-center"
-        *ngFor="let product of kitItems"
+        *ngFor="let orderItem of orderItems"
       >
-        <h3 class="text-lg font-normal">{{ product.name }}</h3>
+        <h3 class="text-lg font-normal">{{ orderItem.product.name }}</h3>
         <div
           class="flex items-center justify-between outline outline-2 w-20 rounded-sm h-6"
         >
           <button
             class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent font-bold text-lg"
+            (click)="onDecreaseQuantity(orderItem)"
           >
             -
           </button>
-          <span class="font-bold">1</span>
+          <span class="font-bold">{{ orderItem.quantity }}</span>
           <button
             class="btn bg-transparent border-none shadow-none text-black hover:bg-transparent text-lg"
+            (click)="onIncreaseQuantity(orderItem)"
           >
             +
           </button>
@@ -111,7 +113,7 @@
       <hr class="border-[#8F9EA3] border-t-2" />
       <div class="flex flex-row justify-between items-center">
         <h1 class="text-3xl">Total</h1>
-        <h1 class="text-3xl">$35</h1>
+        <h1 class="text-3xl">{{ totalPrice | currency : "GBP" }}</h1>
       </div>
     </div>
   </div>

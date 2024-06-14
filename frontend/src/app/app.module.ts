@@ -14,6 +14,7 @@ import { stepperComponent } from './components/stepper/stepper.component';
 import { PricingComponent } from './pages/select/components/pricing/pricing.component';
 import { CustomerComponent } from './pages/home/components/customer/customer.component';
 import { SolutionComponent } from './pages/home/components/solution/solution.component';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { SolutionComponent } from './pages/home/components/solution/solution.com
     SolutionComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [provideAnimationsAsync()],
+  providers: [provideAnimationsAsync(), OrderService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
