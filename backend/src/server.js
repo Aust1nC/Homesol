@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDB = require("./config/db.js");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const PORT = process.env.PORT;
 
