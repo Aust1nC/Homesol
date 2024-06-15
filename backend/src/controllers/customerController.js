@@ -1,10 +1,9 @@
 const Customer = require("../models/Customer");
-const CustomerModel = require("../models/Customer");
 
 let CustomerController = {
   all: async (req, res) => {
     try {
-      let found = await CustomerModel.find();
+      let found = await Customer.find();
       res.json(found);
     } catch (error) {
       res.status(500).send({ message: error.message });
@@ -13,7 +12,7 @@ let CustomerController = {
 
   find: async (req, res) => {
     try {
-      let found = await CustomerModel.findById(req.params.id);
+      let found = await Customer.findById(req.params.id);
       if (!found) {
         return res.status(404).send({ error: "Customer not found." });
       }
@@ -25,7 +24,7 @@ let CustomerController = {
 
   create: async (req, res) => {
     try {
-      let newCustomer = new CustomerModel(req.body);
+      let newCustomer = new Customer(req.body);
       let savedCustomer = await newCustomer.save();
       res.status(201).json(savedCustomer);
     } catch (error) {
@@ -37,11 +36,11 @@ let CustomerController = {
 
   update: async (req, res) => {
     try {
-      let found = await CustomerModel.findById(req.params.id);
+      let found = await Customer.findById(req.params.id);
 
       if (found) {
-        let updated = await CustomerModel.findByIdAndUpdate(
-          req.params.id,
+        let updated = await Customer.findOneAndUpdate(
+          { _id: req.params.id },
           req.body,
           { new: true, runValidators: true }
         );
@@ -57,7 +56,7 @@ let CustomerController = {
   delete: async (req, res) => {
     try {
       let id = req.params.id;
-      let result = await CustomerModel.deleteOne({ _id: id });
+      let result = await Customer.deleteOne({ _id: id });
       if (result.deletedCount === 0) {
         return res.status(404).send({ error: "Customer not found." });
       }

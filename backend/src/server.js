@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDB = require("./config/db.js");
+const ProductController = require("./controllers/productControllere.js");
 require("dotenv").config({ path: "../.env" });
 
 const PORT = process.env.PORT;
@@ -29,6 +30,7 @@ app.use("*", (req, res, next) => {
 
 // Assign Routes
 app.use("/", require("./routes/customer.js"));
+app.use("/", require("./routes/product.js"));
 
 // Handle not valid route
 app.use("*", (req, res) => {

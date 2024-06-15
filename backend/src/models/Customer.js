@@ -17,7 +17,7 @@ const CustomerSchema = new Schema({
     unique: true,
   },
   subscription: {
-    type: String,
+    type: Boolean,
     required: true,
   },
   startDate: {
