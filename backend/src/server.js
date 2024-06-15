@@ -31,6 +31,7 @@ app.use("*", (req, res, next) => {
 // Assign Routes
 app.use("/", require("./routes/customer.js"));
 app.use("/", require("./routes/product.js"));
+app.use("/", require("./routes/auth.js"));
 
 // Handle not valid route
 app.use("*", (req, res) => {

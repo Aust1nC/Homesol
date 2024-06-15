@@ -16,6 +16,7 @@ import { CustomerComponent } from './pages/home/components/customer/customer.com
 import { SolutionComponent } from './pages/home/components/solution/solution.component';
 import { OrderService } from './services/order.service';
 import { provideHttpClient } from '@angular/common/http';
+import { LoginComponent } from './pages/authenticate/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { provideHttpClient } from '@angular/common/http';
     PricingComponent,
     CustomerComponent,
     SolutionComponent,
+    LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideAnimationsAsync(), provideHttpClient(), OrderService],
