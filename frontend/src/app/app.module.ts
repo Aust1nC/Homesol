@@ -15,6 +15,7 @@ import { PricingComponent } from './pages/select/components/pricing/pricing.comp
 import { CustomerComponent } from './pages/home/components/customer/customer.component';
 import { SolutionComponent } from './pages/home/components/solution/solution.component';
 import { OrderService } from './services/order.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { OrderService } from './services/order.service';
     SolutionComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [provideAnimationsAsync(), OrderService],
+  providers: [provideAnimationsAsync(), provideHttpClient(), OrderService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

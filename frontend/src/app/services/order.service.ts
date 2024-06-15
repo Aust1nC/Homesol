@@ -1,12 +1,28 @@
-import { BehaviorSubject } from 'rxjs';
 import { OrderItem } from './../models/order.model';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  constructor() {}
+  private dataUrl = 'http://localhost:3000/product';
+  private defaultQuantity = 1;
+
+  constructor(private http: HttpClient) {}
+
+  fetchProducts(): Observable<OrderItem[]> {
+    return this.http.get<Product[]>(this.dataUrl).pipe(
+      map((products: Product[]) => {
+        return products.map((product) => ({
+          product,
+          quantity: this.defaultQuantity,
+        }));
+      })
+    );
+  }
 
   increaseQuantity(orderItem: OrderItem): void {
     orderItem.quantity++;

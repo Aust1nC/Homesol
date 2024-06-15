@@ -13,151 +13,26 @@ export class PricingComponent implements OnInit {
   category = 'technology';
   totalPrice = 0;
 
-  inventory: OrderItem[] = [
-    {
-      product: {
-        id: '1',
-        name: 'Drying rack',
-        price: 5,
-        category: 'appliance',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '2',
-        name: 'Electric kettle',
-        price: 5,
-        category: 'appliance',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '3',
-        name: 'Rice cooker',
-        price: 5,
-        category: 'appliance',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '4',
-        name: 'Hair dryer',
-        price: 5,
-        category: 'appliance',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '5',
-        name: 'Desk lamp',
-        price: 5,
-        category: 'appliance',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '6',
-        name: 'Home pod',
-        price: 10,
-        category: 'technology',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '7',
-        name: 'Robot vacuum cleaner',
-        price: 15,
-        category: 'technology',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '8',
-        name: 'Mini projector',
-        price: 10,
-        category: 'technology',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '9',
-        name: 'Dehumidifier',
-        price: 5,
-        category: 'technology',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '10',
-        name: 'Monitor',
-        price: 10,
-        category: 'technology',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '11',
-        name: 'Chopping board',
-        price: 5,
-        category: 'kitchen',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '12',
-        name: 'Knife set',
-        price: 5,
-        category: 'kitchen',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '13',
-        name: 'Microwave',
-        price: 10,
-        category: 'kitchen',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '14',
-        name: 'Bowls and plates',
-        price: 10,
-        category: 'kitchen',
-      },
-      quantity: 1,
-    },
-    {
-      product: {
-        id: '15',
-        name: 'Apron',
-        price: 5,
-        category: 'kitchen',
-      },
-      quantity: 1,
-    },
-  ];
-
+  inventory: OrderItem[] = [];
   orderItems: OrderItem[] = [];
 
   constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
-    this.getOrderItems();
-    this.calculateTotalPrice();
+    this.fetchInventory();
+  }
+
+  fetchInventory(): void {
+    this.orderService.fetchProducts().subscribe({
+      next: (data) => {
+        this.inventory = data;
+        this.getOrderItems();
+        this.calculateTotalPrice();
+      },
+      error: (error) => {
+        console.log('Error fetching products', error);
+      },
+    });
   }
 
   onDuration(event: Event): void {
