@@ -10,7 +10,15 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
   },
   role: {
     type: String,

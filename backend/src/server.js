@@ -3,7 +3,11 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDB = require("./config/db.js");
-const ProductController = require("./controllers/productControllere.js");
+const session = require("express-session");
+const methodOverride = require("method-override");
+const { checkAuthenticated } = require("./middleware/authMiddleware.js");
+const passport = require("./config/passport");
+
 require("dotenv").config({ path: "../.env" });
 
 const PORT = process.env.PORT;
@@ -11,27 +15,47 @@ const PORT = process.env.PORT;
 // Instantiate an Express Application
 const app = express();
 
-// Configure Express App Instance
+// Set Ejs view engine
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
+// Middleware
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-// Connect to database
-connectDB();
-
+app.use(express.urlencoded({ extended: false, limit: "10mb" }));
 app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride());
+
+// Connect to database
+connectDB();
+
 // This middleware adds the json header to every response
-app.use("*", (req, res, next) => {
-  res.setHeader("Content-Type", "application/json");
-  next();
-});
+// app.use("*", (req, res, next) => {
+//   res.setHeader("Content-Type", "application/json");
+//   next();
+// });
 
 // Assign Routes
 app.use("/", require("./routes/customer.js"));
 app.use("/", require("./routes/product.js"));
 app.use("/", require("./routes/auth.js"));
+app.get("/", checkAuthenticated, (req, res) => {
+  res.render("home");
+});
 
 // Handle not valid route
 app.use("*", (req, res) => {
