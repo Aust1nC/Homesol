@@ -14,6 +14,5 @@ import { NoHeaderFooterLayoutComponent } from './layouts/no-header-footer-layout
     NoHeaderFooterLayoutComponent,
   ],
   imports: [CommonModule, RouterModule],
-  exports: [HeaderComponent, FooterComponent],
 })
 export class SharedModule {}

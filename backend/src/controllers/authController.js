@@ -4,28 +4,33 @@ const User = require("../models/User");
 
 let authController = {
   loginPage: (req, res) => {
-    res.render("login", { message: req.query.error });
+    res.redirect("http://localhost:4200");
+    // res.render("login", { message: req.query.error });
   },
 
   loginUser: (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
+        console.log("Error during authentication");
         return next(err);
       }
       if (!user) {
-        return res.redirect("/login?error=" + info.message);
+        console.log("User not found");
+        return res.redirect("/auth/login?error=" + info.message);
       }
       req.logIn(user, (err) => {
         if (err) {
+          console.log("Error during login");
           return next(err);
         }
-        return res.redirect("/");
+        console.log("Login successful");
+        return res.redirect("http://localhost:4200");
       });
     })(req, res, next);
   },
 
   logoutUser: async (req, res) => {
-    req.logout(() => res.redirect("/login"));
+    req.logout(() => res.redirect("/auth/login"));
   },
 
   registerPage: async (req, res) => {
@@ -49,7 +54,7 @@ let authController = {
         password: hashedPassword,
       });
       await newUser.save();
-      res.redirect("/login");
+      res.redirect("http://localhost:4200/login");
     } catch (error) {
       res.status(500).json({ message: "Server error" });
     }
@@ -58,8 +63,8 @@ let authController = {
   googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
 
   googleAuthCallback: passport.authenticate("google", {
-    failureRedirect: "/login",
-    successRedirect: "/",
+    failureRedirect: "http://localhost:4200/login",
+    successRedirect: "http://localhost:4200",
   }),
 };
 

@@ -7,7 +7,7 @@ router.post("/login", authController.loginUser);
 router.get("/register", authController.registerPage);
 router.post("/register", authController.registerUser);
 router.post("/logout", authController.logoutUser);
-router.get("/auth/google", authController.googleAuth);
-router.get("/auth/callback", authController.googleAuthCallback);
+router.get("/google", authController.googleAuth);
+router.get("/callback", authController.googleAuthCallback);
 
 module.exports = router;
