@@ -3,11 +3,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
 let authController = {
-  loginPage: (req, res) => {
-    res.redirect("http://localhost:4200");
-    // res.render("login", { message: req.query.error });
-  },
-
   loginUser: (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -16,7 +11,7 @@ let authController = {
       }
       if (!user) {
         console.log("User not found");
-        return res.redirect("/auth/login?error=" + info.message);
+        return res.status(400).json({ message: info.message });
       }
       req.logIn(user, (err) => {
         if (err) {
@@ -24,17 +19,17 @@ let authController = {
           return next(err);
         }
         console.log("Login successful");
-        return res.redirect("http://localhost:4200");
+        return res.json(user);
       });
     })(req, res, next);
   },
 
   logoutUser: async (req, res) => {
-    req.logout(() => res.redirect("/auth/login"));
-  },
-
-  registerPage: async (req, res) => {
-    res.render("register");
+    req.logout((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Server error during logout" });
+      }
+    });
   },
 
   registerUser: async (req, res) => {
@@ -54,7 +49,7 @@ let authController = {
         password: hashedPassword,
       });
       await newUser.save();
-      res.redirect("http://localhost:4200/login");
+      res.status(200).json({ message: "User created" });
     } catch (error) {
       res.status(500).json({ message: "Server error" });
     }

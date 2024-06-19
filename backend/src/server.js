@@ -58,9 +58,6 @@ connectDB();
 app.use("/", require("./routes/customer.js"));
 app.use("/product", require("./routes/product.js"));
 app.use("/auth", require("./routes/auth.js"));
-// app.get("/", checkAuthenticated, (req, res) => {
-//   res.render("home");
-// });
 
 // Handle not valid route
 app.use("*", (req, res) => {

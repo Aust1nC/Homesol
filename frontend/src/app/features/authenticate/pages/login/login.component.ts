@@ -16,13 +16,14 @@ export class LoginComponent {
 
   login(): void {
     this.authService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        console.log('Login successful', response);
+      next: (res) => {
+        console.log('Login successful', res);
         this.router.navigate(['/']);
       },
 
       error: (error) => {
-        console.log('Login error', error);
+        console.log('Login error:', error);
+        this.router.navigate(['/login']);
       },
     });
   }

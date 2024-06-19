@@ -24,6 +24,7 @@ export class SignupComponent {
         },
         error: (error) => {
           console.log('Failed to register', error);
+          this.router.navigate(['/']);
         },
       });
   }
