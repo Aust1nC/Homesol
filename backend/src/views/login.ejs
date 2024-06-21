@@ -9,9 +9,7 @@
 
   <body>
     <h1>Login</h1>
-    <% if (message && message.length > 0) { %>
-      <%= message %>
-    <% } %>
+
     <form action="/auth/login" method="POST">
       <div>
         <label for="email">Email</label>

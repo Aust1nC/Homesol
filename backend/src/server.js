@@ -55,9 +55,19 @@ connectDB();
 // });
 
 // Assign Routes
-app.use("/", require("./routes/customer.js"));
+// app.use("/", require("./routes/customer.js"));
 app.use("/product", require("./routes/product.js"));
 app.use("/auth", require("./routes/auth.js"));
+app.get("/login", (req, res) => res.render("login"));
+app.get("/", (req, res) => res.render("home"));
+app.get("/register", (req, res) => res.render("register"));
+app.get("/user/profile", passport.authenticate("jwt"), (req, res, next) => {
+  res.json({
+    message: "You made it to the secure route",
+    user: req.user,
+    token: req.query.token,
+  });
+});
 
 // Handle not valid route
 app.use("*", (req, res) => {

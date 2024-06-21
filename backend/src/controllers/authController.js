@@ -30,6 +30,7 @@ let authController = {
       if (err) {
         return res.status(500).json({ message: "Server error during logout" });
       }
+      res.json({ message: "logged out successfully." });
     });
   },
 
@@ -53,8 +54,8 @@ let authController = {
   googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
 
   googleAuthCallback: passport.authenticate("google", {
-    failureRedirect: "http://localhost:4200/login",
-    successRedirect: "http://localhost:4200",
+    failureRedirect: "http://localhost:3000/login",
+    successRedirect: "http://localhost:3000",
   }),
 };
 
