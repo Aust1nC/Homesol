@@ -17,15 +17,21 @@ passport.use(
     async (req, username, password, done) => {
       const { email } = req.body;
       try {
+        console.log("Registering user:", username, email);
         const found = await User.findOne({ email });
         if (found) {
+          console.log("Email exists");
           return done(null, false, { message: "Email already registered" });
         }
 
-        const newUser = await new User({ username, email, password });
+        const newUser = new User({ username, email, password });
         await newUser.save();
+        console.log("Registered");
+
         return done(null, newUser);
       } catch (error) {
+        console.log("Error during registration", error);
+
         return done(error);
       }
     }
@@ -85,25 +91,27 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK,
     },
-    async (token, tokenSecret, profile, email, done) => {
+    async (accessToken, refreshToken, profile, email, done) => {
       try {
-        let user = await User.findOne({ googleId: email.id });
+        let oldUser = await User.findOne({ googleId: email.id });
         console.log("profile: ", profile);
-        // console.log("email: ", email);
+        console.log("email: ", email);
 
-        if (user) {
-          // console.log("User found", user);
-          return done(null, user);
-        } else {
-          user = new User({
-            googleId: email.id,
-            email: email.emails[0].value,
-            username: email.displayName,
-          });
-          await user.save();
-          done(null, user);
-          // console.log("User created", user);
+        if (oldUser) {
+          console.log("User found", oldUser);
+          return done(null, oldUser);
         }
+      } catch (err) {
+        console.log(err);
+      }
+      try {
+        const newUser = await new User({
+          googleId: email.id,
+          email: email.emails[0].value,
+          username: email.displayName,
+        }).save();
+        done(null, newUser);
+        console.log("User created", newUser);
       } catch (error) {
         console.log("Error ", error);
         done(error, false);

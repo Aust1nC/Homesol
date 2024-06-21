@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const authController = require("../controllers/authController");
-const { checkNotAuthenticated } = require("../middleware/authMiddleware");
 
 router.post("/login", authController.loginUser);
 router.post("/register", authController.registerUser);

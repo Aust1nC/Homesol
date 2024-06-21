@@ -9,19 +9,9 @@ let authController = {
         console.log("Error during authentication");
         return next(err);
       }
-      if (!user) {
-        console.log("User not found");
-        return res.status(400).json({ message: info.message });
-      }
-      req.logIn(user, (err) => {
-        if (err) {
-          console.log("Error during login");
-          return next(err);
-        }
-        console.log("Login successful");
-        const token = user.generateJWT();
-        return res.json({ user, token });
-      });
+      const token = user.generateJWT();
+      const me = user.toJSON();
+      return res.json({ me, token });
     })(req, res, next);
   },
 
@@ -35,7 +25,7 @@ let authController = {
   },
 
   registerUser: (req, res, next) => {
-    passport.authenticate("register", { sesison: false }, (err, user, info) => {
+    passport.authenticate("register", { session: false }, (err, user, info) => {
       if (err) {
         return next(err);
       }
@@ -51,12 +41,28 @@ let authController = {
     })(req, res, next);
   },
 
-  googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
-
-  googleAuthCallback: passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
-    successRedirect: "http://localhost:3000",
+  googleAuth: passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
   }),
+
+  googleAuthCallback: (req, res, next) => {
+    passport.authenticate(
+      "google",
+      { failureRedirect: "http://localhost:3000/login", session: false },
+      (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        if (!user) {
+          return res.redirect("http://localhost:3000/login");
+        }
+        const token = user.generateJWT();
+        // res.redirect(`http://localhost:3000?token=${token}`);
+        return res.json({ user, token });
+      }
+    )(req, res, next);
+  },
 };
 
 module.exports = authController;

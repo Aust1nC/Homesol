@@ -78,4 +78,12 @@ UserSchema.methods.generateJWT = function () {
   return token;
 };
 
+UserSchema.methods.toJSON = function () {
+  return {
+    _id: this._id,
+    email: this.email,
+    username: this.username,
+  };
+};
+
 module.exports = mongoose.model("User", UserSchema);
