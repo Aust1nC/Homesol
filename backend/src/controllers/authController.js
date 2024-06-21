@@ -1,10 +1,10 @@
 const passport = require("passport");
-const bcrypt = require("bcrypt");
-const User = require("../models/User");
+
+clientUrl = "localhost://4200";
 
 let authController = {
   loginUser: (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("login", { session: false }, (err, user, info) => {
       if (err) {
         console.log("Error during authentication");
         return next(err);
@@ -19,7 +19,8 @@ let authController = {
           return next(err);
         }
         console.log("Login successful");
-        return res.json(user);
+        const token = user.generateJWT();
+        return res.json({ user, token });
       });
     })(req, res, next);
   },
@@ -32,27 +33,21 @@ let authController = {
     });
   },
 
-  registerUser: async (req, res) => {
-    try {
-      const { username, email, password } = req.body;
-
-      let existingUser = await User.findOne({ email });
-
-      if (existingUser) {
-        return res.status(400).json({ message: "User already exists" });
+  registerUser: (req, res, next) => {
+    passport.authenticate("register", { sesison: false }, (err, user, info) => {
+      if (err) {
+        return next(err);
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({
-        username,
-        email,
-        password: hashedPassword,
+      if (!user) {
+        return res.status(400).json({ message: info.message });
+      }
+
+      res.json({
+        message: "Signup successful",
+        user: user,
       });
-      await newUser.save();
-      res.status(200).json({ message: "User created" });
-    } catch (error) {
-      res.status(500).json({ message: "Server error" });
-    }
+    })(req, res, next);
   },
 
   googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
