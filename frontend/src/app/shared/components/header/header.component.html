@@ -16,14 +16,43 @@
     <button
       class="btn btn-sm font-normal rounded-xl w-20 sm:w-28 text-lg border-2 hover:border-[#55CCF8] border-[#55CCF8] outline-[#55CCF8] text-[#55CCF8] bg-white hover:bg-[#55CCF8] hover:text-white"
       routerLink="auth/login"
+      *ngIf="!authService.currentUserValue"
     >
       Log in
     </button>
     <button
       class="btn btn-sm font-normal rounded-xl w-18 sm:w-28 text-lg bg-[#55CCF8] text-white hover:bg-[#58bde2]"
       routerLink="auth/signup"
+      *ngIf="!authService.currentUserValue"
     >
       Sign up
     </button>
+    <div class="dropdown pr-8 lg:pr-20" *ngIf="authService.currentUserValue">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          role="button"
+          tabindex="0"
+          class="btn m-1 bg-transparent border-none shadow-none text-[#55CCF8]"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          />
+        </svg>
+      </div>
+      <ul
+        tabindex="0"
+        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full"
+      >
+        <li><a>Profile</a></li>
+        <li><a class="text-red-400" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
   </div>
 </section>
