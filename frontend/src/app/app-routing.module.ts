@@ -31,6 +31,7 @@ const routes: Routes = [
         (m) => m.AuthenticateModule
       ),
   },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

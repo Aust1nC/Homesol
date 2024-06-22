@@ -8,13 +8,13 @@ import { Product } from '../../models/product.model';
   providedIn: 'root',
 })
 export class OrderService {
-  private dataUrl = 'http://localhost:3000/product';
+  private apiUrl = 'http://localhost:3000/product';
   private defaultQuantity = 1;
 
   constructor(private http: HttpClient) {}
 
   fetchProducts(): Observable<OrderItem[]> {
-    return this.http.get<Product[]>(this.dataUrl).pipe(
+    return this.http.get<Product[]>(this.apiUrl).pipe(
       map((products: Product[]) => {
         return products.map((product) => ({
           product,

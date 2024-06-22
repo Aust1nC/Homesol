@@ -30,6 +30,6 @@ export class SignupComponent {
   }
 
   googleRegister(): void {
-    this.authService.googleRegister();
+    this.authService.googleLogin();
   }
 }

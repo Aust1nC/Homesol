@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-clientUrl = "localhost://4200";
+clientUrl = "http://localhost:4200";
 
 let authController = {
   loginUser: (req, res, next) => {
@@ -49,16 +49,15 @@ let authController = {
   googleAuthCallback: (req, res, next) => {
     passport.authenticate(
       "google",
-      { failureRedirect: "http://localhost:3000/login", session: false },
+      { failureRedirect: `${clientUrl}/login`, session: false },
       (err, user) => {
         if (err) {
           return next(err);
         }
         if (!user) {
-          return res.redirect("http://localhost:3000/login");
+          return res.redirect(`${clientUrl}/login`);
         }
         const token = user.generateJWT();
-        // res.redirect(`http://localhost:3000?token=${token}`);
         return res.json({ user, token });
       }
     )(req, res, next);
