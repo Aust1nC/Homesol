@@ -31,6 +31,13 @@ const routes: Routes = [
         (m) => m.AuthenticateModule
       ),
   },
+
+  {
+    path: 'user',
+    component: NoHeaderFooterLayoutComponent,
+    loadChildren: () =>
+      import('./features/user/user.module').then((m) => m.UserModule),
+  },
   { path: '**', redirectTo: '' },
 ];
 

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, interval } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
@@ -8,11 +8,27 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
+export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   private currentUserSubject: BehaviorSubject<User | null>;
   private currentUser: Observable<User | null>;
   private checkInterval = 60 * 1000;
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<User | null>(
+      JSON.parse(localStorage.getItem('currentUser') || '{}')
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.validateTokenOnStartup();
+    this.startTokenExpiryCheck();
+  }
+
+  private validateTokenOnStartup(): void {
+    const token = this.getToekn();
+    if (!token || this.tokenExpired(token)) {
+      this.logout();
+    }
+  }
 
   private tokenExpired(token: string): boolean {
     if (!token) {
@@ -40,14 +56,6 @@ export class AuthService implements OnInit {
         console.error(error);
       },
     });
-  }
-
-  constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      JSON.parse(localStorage.getItem('currentUser') || '{}')
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
-    this.startTokenExpiryCheck();
   }
 
   public get currentUserValue(): User | null {
