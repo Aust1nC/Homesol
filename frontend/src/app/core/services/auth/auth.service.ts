@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, interval } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
@@ -8,16 +8,46 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnInit {
   private apiUrl = 'http://localhost:3000/auth';
   private currentUserSubject: BehaviorSubject<User | null>;
   private currentUser: Observable<User | null>;
+  private checkInterval = 60 * 1000;
+
+  private tokenExpired(token: string): boolean {
+    if (!token) {
+      return true;
+    } else {
+      const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+      return Math.floor(new Date().getTime() / 1000) >= expiry;
+    }
+  }
+
+  private getToekn(): string {
+    return this.currentUserValue?.token || '';
+  }
+
+  private startTokenExpiryCheck(): void {
+    interval(this.checkInterval).subscribe({
+      next: () => {
+        const token = this.getToekn();
+        console.log(token);
+        if (this.tokenExpired(token)) {
+          this.logout();
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
 
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User | null>(
       JSON.parse(localStorage.getItem('currentUser') || '{}')
     );
     this.currentUser = this.currentUserSubject.asObservable();
+    this.startTokenExpiryCheck();
   }
 
   public get currentUserValue(): User | null {
@@ -69,9 +99,5 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(userWithToken));
     this.currentUserSubject.next(userWithToken);
     this.router.navigate(['/']);
-  }
-
-  getToekn(): string {
-    return this.currentUserValue?.token || '';
   }
 }
