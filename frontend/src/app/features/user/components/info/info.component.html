@@ -1,14 +1,158 @@
 <div class="flex flex-col">
   <div class="flex">
-    <h1 class="text-4xl text-left">Profile</h1>
+    <h1 class="text-4xl text-left">User Information</h1>
   </div>
-  <div class="card bg-white w-full shadow-lg mt-5">
-    <div class="card-body">
-      <h2 class="card-title">Card title!</h2>
-      <p>If a dog chews shoes whose shoes does he choose?</p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Buy Now</button>
+  <div class="bg-white w-full shadow-lg mt-5 rounded-lg">
+    <form [formGroup]="bioSection">
+      <div class="m-8 text-left">
+        <label
+          for="username"
+          class="block text-gray-700 text-md font-bold mb-2"
+        >
+          Username
+        </label>
+        <input
+          name="name"
+          formControlName="username"
+          type="name"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          required
+        />
+        <div
+          *ngIf="
+            bioSection.controls.username.invalid &&
+            (bioSection.controls.username.dirty ||
+              bioSection.controls.username.touched)
+          "
+        >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.username?.errors?.['required']"
+            >Username is required.</small
+          >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.username?.errors?.['minlength']"
+            >Username must be at least 3 characters long.</small
+          >
+        </div>
+
+        <label
+          for="firstName"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          First Name
+        </label>
+        <input
+          name="name"
+          formControlName="firstName"
+          type="name"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          required
+        />
+        <div
+          *ngIf="
+            bioSection.controls.firstName.invalid &&
+            (bioSection.controls.firstName.dirty ||
+              bioSection.controls.firstName.touched)
+          "
+        >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.firstName?.errors?.['required']"
+            >First name is required.</small
+          >
+        </div>
+
+        <label
+          for="lastName"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          Last Name
+        </label>
+        <input
+          name="name"
+          formControlName="lastName"
+          type="name"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          required
+        />
+        <div
+          *ngIf="
+            bioSection.controls.lastName.invalid &&
+            (bioSection.controls.lastName.dirty ||
+              bioSection.controls.lastName.touched)
+          "
+        >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.lastName?.errors?.['required']"
+            >Last name is required.</small
+          >
+        </div>
+
+        <label
+          for="createdAt"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          Account Since
+        </label>
+        <input
+          name="name"
+          formControlName="createdAt"
+          type="date"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          readonly
+        />
       </div>
-    </div>
+    </form>
+  </div>
+
+  <div class="bg-white w-full shadow-lg mt-14 rounded-lg">
+    <form [formGroup]="subscriptionSection">
+      <div class="m-8 text-left">
+        <label
+          for="subscription"
+          class="block text-gray-700 text-md font-bold mb-2"
+        >
+          Subscription
+        </label>
+        <input
+          name="subscription"
+          formControlName="subscription"
+          type="text"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          readonly
+        />
+
+        <label
+          for="startDate"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          Start Date
+        </label>
+        <input
+          name="startDate"
+          formControlName="startDate"
+          type="date"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          readonly
+        />
+
+        <label
+          for="endDate"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          End Date
+        </label>
+        <input
+          name="endDate"
+          formControlName="endDate"
+          type="date"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          readonly
+        />
+      </div>
+    </form>
   </div>
 </div>
