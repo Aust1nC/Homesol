@@ -36,7 +36,7 @@ connectDB();
 
 // Assign Routes
 app.use("/product", require("./routes/product.js"));
-app.use("/user", require("./routes/user.js"));
+app.use("/admin", require("./routes/admin.js"));
 app.use("/auth", require("./routes/auth.js"));
 
 // API testing

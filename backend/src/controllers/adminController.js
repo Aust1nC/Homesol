@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-let UserController = {
+let AdminController = {
   all: async (req, res) => {
     try {
       let found = await User.find();
@@ -67,4 +67,4 @@ let UserController = {
   },
 };
 
-module.exports = UserController;
+module.exports = AdminController;

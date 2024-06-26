@@ -15,7 +15,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, username, password, done) => {
-      const { email } = req.body;
+      const { firstName, lastName, email } = req.body;
       try {
         console.log("Registering user:", username, email);
         const found = await User.findOne({ email });
@@ -24,7 +24,13 @@ passport.use(
           return done(null, false, { message: "Email already registered" });
         }
 
-        const newUser = new User({ username, email, password });
+        const newUser = new User({
+          username,
+          firstName,
+          lastName,
+          email,
+          password,
+        });
         await newUser.save();
         console.log("Registered");
 
