@@ -36,23 +36,24 @@ connectDB();
 
 // Assign Routes
 app.use("/product", require("./routes/product.js"));
+app.use("/user", require("./routes/user.js"));
 app.use("/auth", require("./routes/auth.js"));
 
 // API testing
-app.get("/", (req, res) => res.render("home"));
-app.get("/auth/login", (req, res) => res.render("login"));
-app.get("/auth/register", (req, res) => res.render("register"));
-app.get(
-  "/user/profile",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    res.json({
-      message: "You made it to the secure route",
-      user: req.user,
-      token: req.query.token,
-    });
-  }
-);
+// app.get("/", (req, res) => res.render("home"));
+// app.get("/auth/login", (req, res) => res.render("login"));
+// app.get("/auth/register", (req, res) => res.render("register"));
+// app.get(
+//   "/user/profile",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res, next) => {
+//     res.json({
+//       message: "You made it to the secure route",
+//       user: req.user,
+//       token: req.query.token,
+//     });
+//   }
+// );
 
 // Handle not valid route
 app.use("*", (req, res) => {

@@ -1,9 +1,9 @@
-const Customer = require("../models/Customer");
+const User = require("../models/User");
 
-let CustomerController = {
+let UserController = {
   all: async (req, res) => {
     try {
-      let found = await Customer.find();
+      let found = await User.find();
       res.json(found);
     } catch (error) {
       res.status(500).send({ message: error.message });
@@ -12,9 +12,9 @@ let CustomerController = {
 
   find: async (req, res) => {
     try {
-      let found = await Customer.findById(req.params.id);
+      let found = await User.findById(req.params.id);
       if (!found) {
-        return res.status(404).send({ error: "Customer not found." });
+        return res.status(404).send({ error: "User not found." });
       }
       res.json(found);
     } catch (error) {
@@ -24,9 +24,9 @@ let CustomerController = {
 
   create: async (req, res) => {
     try {
-      let newCustomer = new Customer(req.body);
-      let savedCustomer = await newCustomer.save();
-      res.status(201).json(savedCustomer);
+      let newUser = new User(req.body);
+      let savedUser = await newUser.save();
+      res.status(201).json(savedUser);
     } catch (error) {
       res.status(409).send({
         message: error.message,
@@ -36,10 +36,10 @@ let CustomerController = {
 
   update: async (req, res) => {
     try {
-      let found = await Customer.findById(req.params.id);
+      let found = await User.findById(req.params.id);
 
       if (found) {
-        let updated = await Customer.findOneAndUpdate(
+        let updated = await User.findOneAndUpdate(
           { _id: req.params.id },
           req.body,
           { new: true, runValidators: true }
@@ -56,15 +56,15 @@ let CustomerController = {
   delete: async (req, res) => {
     try {
       let id = req.params.id;
-      let result = await Customer.deleteOne({ _id: id });
+      let result = await User.deleteOne({ _id: id });
       if (result.deletedCount === 0) {
-        return res.status(404).send({ error: "Customer not found." });
+        return res.status(404).send({ error: "User not found." });
       }
-      res.json({ message: "Customer deleted." });
+      res.json({ message: "User deleted." });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
   },
 };
 
-module.exports = CustomerController;
+module.exports = UserController;

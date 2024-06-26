@@ -1,17 +1,21 @@
-<section
-  class="flex flex-row md:flex-col min-h-screen bg-gray-100 justify-center shadow-lg"
->
-  <div
-    class="flex flex-1 max-h-[90vh] max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg justify-center"
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <section
+    class="flex flex-row md:flex-col bg-gray-100 shadow-lg max-w-screen-xl w-full"
   >
-    <div class="flex flex-1 flex-col md:flex-row text-center w-full">
-      <div class="flex md:w-1/4">
-        <app-drawer class="w-full overflow-y-auto"></app-drawer>
-      </div>
+    <div
+      class="flex flex-1 max-h-[90vh] bg-white shadow sm:rounded-lg justify-center overflow-hidden"
+    >
+      <div class="flex flex-1 flex-col md:flex-row text-center w-full">
+        <div class="flex md:w-1/4">
+          <app-drawer class="w-full overflow-y-auto"></app-drawer>
+        </div>
 
-      <div class="flex flex-1 lg:flex-auto p-12 w-full bg-[#F9FAFB]">
-        <app-info class="w-full"></app-info>
+        <div
+          class="flex flex-1 lg:flex-auto p-12 w-full bg-[#F9FAFB] overflow-y-auto no-scrollbar"
+        >
+          <app-info class="w-full"></app-info>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
