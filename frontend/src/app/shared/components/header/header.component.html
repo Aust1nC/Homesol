@@ -1,7 +1,7 @@
 <section
   class="navbar mx-auto w-full justify-between rounded-lg px-4 md:px-2 xl:px-6 shadow"
 >
-  <div class="flex items-center gap-1 pl-2 lg:pl-40">
+  <div class="flex items-center gap-1 pl-2 md:pl-20 xl:pl-40">
     <img src="Logo.png" alt="logo" class="object-cover h-10 md:h-8 w-auto" />
     <a href="" class="md:text-lg text-xl pl-2 text-[#55CCF8]">HOMESOL</a>
   </div>
@@ -27,7 +27,7 @@
     >
       Sign up
     </button>
-    <div class="dropdown pr-8 lg:pr-20" *ngIf="authService.currentUserValue">
+    <div class="dropdown pr-12 lg:pr-20" *ngIf="authService.currentUserValue">
       <div class="hover-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"
