@@ -12,10 +12,10 @@
           Username
         </label>
         <input
-          name="name"
+          id="username"
           formControlName="username"
           type="name"
-          class="border border-gray-300 p-2 mt-1 block rounded-lg sm:w-[65%]"
+          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
           required
         />
         <div
@@ -44,7 +44,7 @@
           First Name
         </label>
         <input
-          name="name"
+          id="firstName"
           formControlName="firstName"
           type="name"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
@@ -71,7 +71,7 @@
           Last Name
         </label>
         <input
-          name="name"
+          id="lastName"
           formControlName="lastName"
           type="name"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
@@ -95,10 +95,10 @@
           for="createdAt"
           class="block text-gray-700 text-md font-bold mb-2 mt-4"
         >
-          Account Since
+          Been With Us Since
         </label>
         <input
-          name="name"
+          id="createdAt"
           formControlName="createdAt"
           type="date"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
@@ -108,7 +108,7 @@
     </form>
   </div>
 
-  <div class="bg-white w-full shadow-lg mt-14 rounded-lg">
+  <div class="bg-white w-full shadow-lg mt-14 mb-8 rounded-lg">
     <form [formGroup]="subscriptionSection">
       <div class="m-8 text-left">
         <label
@@ -118,7 +118,7 @@
           Subscription
         </label>
         <input
-          name="subscription"
+          id="subscription"
           formControlName="subscription"
           type="text"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
@@ -132,7 +132,7 @@
           Start Date
         </label>
         <input
-          name="startDate"
+          id="startDate"
           formControlName="startDate"
           type="date"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
@@ -146,7 +146,7 @@
           End Date
         </label>
         <input
-          name="endDate"
+          id="endDate"
           formControlName="endDate"
           type="date"
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"

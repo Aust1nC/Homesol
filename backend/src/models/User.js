@@ -81,12 +81,16 @@ UserSchema.methods.generateJWT = function () {
   return token;
 };
 
-UserSchema.methods.toJSON = function () {
-  return {
-    _id: this._id,
-    email: this.email,
-    username: this.username,
-  };
-};
+// UserSchema.methods.toJSON = function () {
+//   return {
+//     _id: this._id,
+//     email: this.email,
+//     username: this.username,
+//     firstName: this.firstName,
+//     lastName: this.lastName,
+//     role: this.role,
+//     createdAt
+//   };
+// };
 
 module.exports = mongoose.model("User", UserSchema);

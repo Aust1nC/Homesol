@@ -3,7 +3,7 @@ const User = require("../models/User");
 let AdminController = {
   all: async (req, res) => {
     try {
-      let found = await User.find();
+      let found = await User.find().select("-password -googleId");
       res.json(found);
     } catch (error) {
       res.status(500).send({ message: error.message });

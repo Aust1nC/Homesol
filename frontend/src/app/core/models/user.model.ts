@@ -10,5 +10,9 @@ export interface User {
   subscription: Boolean;
   startDate?: Date;
   endDate?: Date;
-  token?: string;
+}
+
+export interface UserResponse {
+  me: User;
+  token: string;
 }

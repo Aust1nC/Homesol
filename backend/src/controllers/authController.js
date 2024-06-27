@@ -10,7 +10,19 @@ let authController = {
         return next(err);
       }
       const token = user.generateJWT();
-      const me = user.toJSON();
+      // const me = user.toJSON();
+      const me = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        createdAt: user.createdAt,
+        subscription: user.subscription,
+        startDate: user.startDate,
+        endDate: user.endDate,
+      };
+
       return res.json({ me, token });
     })(req, res, next);
   },
