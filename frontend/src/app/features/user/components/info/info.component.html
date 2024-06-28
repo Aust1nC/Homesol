@@ -124,34 +124,35 @@
           class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
           readonly
         />
+        <div *ngIf="subscriptionSection.get('subscription')?.value === 'Yes'">
+          <label
+            for="startDate"
+            class="block text-gray-700 text-md font-bold mb-2 mt-4"
+          >
+            Start Date
+          </label>
+          <input
+            id="startDate"
+            formControlName="startDate"
+            type="date"
+            class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+            readonly
+          />
 
-        <label
-          for="startDate"
-          class="block text-gray-700 text-md font-bold mb-2 mt-4"
-        >
-          Start Date
-        </label>
-        <input
-          id="startDate"
-          formControlName="startDate"
-          type="date"
-          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
-          readonly
-        />
-
-        <label
-          for="endDate"
-          class="block text-gray-700 text-md font-bold mb-2 mt-4"
-        >
-          End Date
-        </label>
-        <input
-          id="endDate"
-          formControlName="endDate"
-          type="date"
-          class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
-          readonly
-        />
+          <label
+            for="endDate"
+            class="block text-gray-700 text-md font-bold mb-2 mt-4"
+          >
+            End Date
+          </label>
+          <input
+            id="endDate"
+            formControlName="endDate"
+            type="date"
+            class="border border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+            readonly
+          />
+        </div>
       </div>
     </form>
   </div>

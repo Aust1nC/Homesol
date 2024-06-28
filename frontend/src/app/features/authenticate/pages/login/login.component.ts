@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit {
-  email: string = '';
-  password: string = '';
+export class LoginComponent {
   loginError: string = '';
-  loginForm!: FormGroup;
-  submitted: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -21,33 +22,38 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    this.submitted = true;
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+  });
 
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+  onSubmit(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email!, password!).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        const message = 'Invalid email or password';
+        this.showLoginError(message);
+        // console.error('Login error:', error);
+      },
     });
   }
 
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe({
-        next: () => {
-          this.router.navigate(['/']);
-        },
-        error: (error) => {
-          this.loginError = 'Invalid email or password';
-
-          console.error('Login error:', error);
-        },
-      });
-    }
-  }
-
-  get loginFormControl() {
-    return this.loginForm.controls;
+  showLoginError(message: string): void {
+    this.loginError = message;
+    setTimeout(() => {
+      this.loginError = '';
+    }, 3000);
   }
 
   googleLogin(): void {

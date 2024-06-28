@@ -9,12 +9,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  username: string = '';
-  password: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-
   constructor(private authService: AuthService, private router: Router) {}
 
   signupForm = new FormGroup({
@@ -27,23 +21,24 @@ export class SignupComponent {
     email: new FormControl<string>('', [Validators.email, Validators.required]),
     password: new FormControl<string>('', [
       Validators.required,
-      Validators.minLength(6),
+      Validators.minLength(3),
     ]),
   });
 
   signup(): void {
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
+      return;
+    }
+
+    const { username, firstName, lastName, email, password } =
+      this.signupForm.value;
     this.authService
-      .register(
-        this.username,
-        this.email,
-        this.firstName,
-        this.lastName,
-        this.password
-      )
+      .register(username!, email!, firstName!, lastName!, password!)
       .subscribe({
         next: (response) => {
           console.log('Register successful', response);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
         },
         error: (error) => {
           console.log('Failed to register', error);
