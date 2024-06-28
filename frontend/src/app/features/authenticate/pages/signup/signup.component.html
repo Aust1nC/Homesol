@@ -53,24 +53,47 @@
           </div>
 
           <div class="mx-auto max-w-xs">
-            <input
-              class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-              type="text"
-              placeholder="Username"
-              [(ngModel)]="username"
-            />
-            <input
-              class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-              type="text"
-              placeholder="Email"
-              [(ngModel)]="email"
-            />
-            <input
-              class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-              type="password"
-              placeholder="Password"
-              [(ngModel)]="password"
-            />
+            <form [formGroup]="signupForm">
+              <input
+                id="username"
+                class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                type="name"
+                placeholder="Username"
+                formControlName="username"
+                required
+              />
+              <div
+                *ngIf="
+                  signupForm.controls.username.invalid &&
+                  (signupForm.controls.username.dirty ||
+                    signupForm.controls.username.touched)
+                "
+              >
+                <small
+                  class="text-red-500"
+                  *ngIf="signupForm.controls.username?.errors?.['required']"
+                >
+                  Username is required.
+                </small>
+                <small
+                  class="text-red-500"
+                  *ngIf="signupForm.controls.username?.errors?.['minlength']"
+                >
+                  Username must be at least 3 characters long.
+                </small>
+              </div>
+
+              <input
+                class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                type="text"
+                placeholder="Email"
+              />
+              <input
+                class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                type="password"
+                placeholder="Password"
+              />
+            </form>
             <button
               class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
               (click)="signup()"

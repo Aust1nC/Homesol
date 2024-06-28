@@ -88,10 +88,14 @@ export class AuthService {
   register(
     username: string,
     email: string,
+    firstName: string,
+    lastName: string,
     password: string
   ): Observable<UserResponse> {
     return this.http.post<UserResponse>(`${this.apiUrl}/register`, {
       username,
+      firstName,
+      lastName,
       email,
       password,
     });
