@@ -9,6 +9,11 @@ import { UserResponse } from '../../../../core/models/user.model';
   styleUrl: './info.component.css',
 })
 export class InfoComponent implements OnInit {
+  updateMessage: { status: boolean | null; message: string } = {
+    status: null,
+    message: '',
+  };
+
   private currentUser = <UserResponse | null>{};
 
   constructor(private authService: AuthService) {}
@@ -19,11 +24,13 @@ export class InfoComponent implements OnInit {
       next: (user) => {
         this.currentUser = user;
         if (user) {
-          console.log(user);
           this.setFormValues(user);
         }
       },
     });
+    // if (this.currentUser) {
+    //   this.setFormValues(this.currentUser);
+    // }
   }
 
   bioSection = new FormGroup({
@@ -61,5 +68,40 @@ export class InfoComponent implements OnInit {
         ? new Date(user.me.endDate).toISOString().split('T')[0]
         : '',
     });
+  }
+
+  showUpdateMessage(status: boolean, message: string): void {
+    this.updateMessage = { status, message };
+    setTimeout(() => {
+      this.updateMessage = { status: null, message: '' };
+    }, 3000);
+  }
+
+  onUpdateUserClick(): void {
+    if (this.currentUser && this.bioSection.valid) {
+      const updatedUserData = {
+        ...this.currentUser.me,
+        username: this.bioSection.get('username')?.value || '',
+        firstName: this.bioSection.get('firstName')?.value || '',
+        lastName: this.bioSection.get('lastName')?.value || '',
+      };
+
+      this.authService
+        .update(this.currentUser?.me._id, updatedUserData)
+        .subscribe({
+          next: (updatedUser) => {
+            this.currentUser = updatedUser;
+            this.showUpdateMessage(true, 'Updated successfully.');
+          },
+          error: (error) => {
+            this.showUpdateMessage(false, error.message);
+          },
+        });
+    } else {
+      this.showUpdateMessage(
+        false,
+        'Form is invalid. Please check your input.'
+      );
+    }
   }
 }

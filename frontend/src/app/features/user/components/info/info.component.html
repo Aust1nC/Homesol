@@ -1,9 +1,9 @@
 <div class="flex flex-col">
   <div class="flex">
-    <h1 class="text-4xl text-left">User Information</h1>
+    <h1 class="text-4xl text-left">My Information</h1>
   </div>
   <div class="bg-white w-full shadow-lg mt-5 rounded-lg">
-    <form [formGroup]="bioSection">
+    <form [formGroup]="bioSection" (ngSubmit)="onUpdateUserClick()">
       <div class="m-8 text-left">
         <label
           for="username"
@@ -155,5 +155,24 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div class="flex justify-center">
+    <button
+      class="w-[30%] my-6 tracking-wide font-semibold bg-[#38bdf8] text-gray-100 py-4 rounded-lg hover:bg-[#7dd3fc] transition-all duration-300 ease-in-out focus:shadow-outline focus:outline-none"
+      (click)="onUpdateUserClick()"
+    >
+      Save
+    </button>
+  </div>
+
+  <div
+    [ngClass]="{
+      'alert alert-success': updateMessage.status === true,
+      'alert alert-error': updateMessage.status === false
+    }"
+    class="toast toast-center justify-center align-middle w-auto mb-4"
+  >
+    <span class="text-white">{{ updateMessage.message }}</span>
   </div>
 </div>

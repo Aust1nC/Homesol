@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, interval } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserResponse } from '../../models/user.model';
+import { User, UserResponse } from '../../models/user.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -68,12 +68,7 @@ export class AuthService {
         tap({
           next: (user) => {
             if (user && user.token) {
-              const userToSave = {
-                _id: user.me._id,
-                username: user.me.username,
-                email: user.me.email,
-                token: user.token,
-              };
+              const userToSave = user;
               localStorage.setItem('currentUser', JSON.stringify(userToSave));
               this.currentUserSubject.next(user);
             }
@@ -101,10 +96,36 @@ export class AuthService {
     });
   }
 
+  update(id: string, userData: Partial<User>): Observable<UserResponse> {
+    return this.http
+      .patch<UserResponse>(`${this.apiUrl}/update/${id}`, userData)
+      .pipe(
+        tap({
+          next: (updatedUser) => {
+            console.log('Updated User:', updatedUser);
+            const currentToken = this.getToekn();
+
+            const updatedUserWithToken = {
+              me: updatedUser.me,
+              token: currentToken,
+            };
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(updatedUserWithToken)
+            );
+            console.log(JSON.stringify(updatedUserWithToken));
+            this.currentUserSubject.next(updatedUserWithToken);
+          },
+          error: (error) => {
+            console.error('Update error:', error);
+          },
+        })
+      );
+  }
+
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    // this.router.navigate(['/login']);
   }
 
   googleLogin(): void {

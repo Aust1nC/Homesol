@@ -1,4 +1,5 @@
 const passport = require("passport");
+const User = require("../models/User");
 
 clientUrl = "http://localhost:4200";
 
@@ -51,6 +52,23 @@ let authController = {
         user: user,
       });
     })(req, res, next);
+  },
+
+  updateUser: async (req, res) => {
+    const found = await User.findById(req.params.id);
+    try {
+      if (found) {
+        const updated = await User.findByIdAndUpdate(req.params.id, req.body, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(200).json({ me: updated });
+      } else {
+        res.status(404).send({ message: "User not found" });
+      }
+    } catch (error) {
+      res.status(500).send({ messgae: error.message });
+    }
   },
 
   googleAuth: passport.authenticate("google", {
