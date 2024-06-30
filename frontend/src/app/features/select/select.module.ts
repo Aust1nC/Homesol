@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { SelectRoutingModule } from './select-routing.module';
 import { DeliveryComponent } from './pages/delivery/delivery.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderInfoComponent } from './components/order-info/order-info.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,13 @@ import { DeliveryComponent } from './pages/delivery/delivery.component';
     PricingComponent,
     StepperComponent,
     DeliveryComponent,
+    OrderInfoComponent,
   ],
-  imports: [CommonModule, SelectRoutingModule],
+  imports: [
+    CommonModule,
+    SelectRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class SelectModule {}

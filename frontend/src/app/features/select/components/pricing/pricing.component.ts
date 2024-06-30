@@ -1,11 +1,12 @@
-import { OrderService } from '../../../../core/services/order/order.service';
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../../../../core/services/order/order.service';
 import { OrderItem } from '../../../../core/models/order.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pricing',
   templateUrl: './pricing.component.html',
-  styleUrl: './pricing.component.css',
+  styleUrls: ['./pricing.component.css'],
 })
 export class PricingComponent implements OnInit {
   rentalDuration = 12;
@@ -16,7 +17,7 @@ export class PricingComponent implements OnInit {
   inventory: OrderItem[] = [];
   orderItems: OrderItem[] = [];
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchInventory();
@@ -70,5 +71,18 @@ export class PricingComponent implements OnInit {
       this.orderItems,
       this.rentalDuration
     );
+  }
+
+  navigateWithState(): void {
+    this.orderService.setOrderItems(this.orderItems);
+    localStorage.setItem(
+      'orderItems',
+      JSON.stringify({
+        orderItems: this.orderItems,
+        totalPrice: this.totalPrice,
+        rentalDuration: this.rentalDuration,
+      })
+    );
+    this.router.navigate(['order/delivery']);
   }
 }

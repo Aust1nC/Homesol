@@ -5,11 +5,18 @@ export interface OrderItem {
   quantity: number;
 }
 
+export interface Address {
+  street: string;
+  city: string;
+  county: string;
+  postcode: string;
+}
+
 export interface Order {
   id: string;
   customer: string;
   items: OrderItem[];
   orderDate: Date;
-  address: string;
+  address: Address;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
 }

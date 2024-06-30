@@ -1,8 +1,9 @@
-import { OrderItem } from '../../models/order.model';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { OrderItem } from '../../models/order.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
 import { Product } from '../../models/product.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,9 @@ import { Product } from '../../models/product.model';
 export class OrderService {
   private apiUrl = 'http://localhost:3000/product';
   private defaultQuantity = 1;
+  private orderItemsSubject = new BehaviorSubject<OrderItem[]>([]);
+
+  orderItems$ = this.orderItemsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -26,12 +30,14 @@ export class OrderService {
 
   increaseQuantity(orderItem: OrderItem): void {
     orderItem.quantity++;
+    this.updateOrderItems();
   }
 
   decreaseQuantity(orderItem: OrderItem): void {
     if (orderItem.quantity > 0) {
       orderItem.quantity--;
     }
+    this.updateOrderItems();
   }
 
   getOrderItems(inventory: OrderItem[], category: string): OrderItem[] {
@@ -40,11 +46,19 @@ export class OrderService {
 
   getTotalPrice(orderItems: OrderItem[], rentalDuration: number): number {
     let totalPrice = 0;
-    orderItems.forEach((OrderItem) => {
+    orderItems.forEach((orderItem) => {
       totalPrice +=
-        (OrderItem.product.price * OrderItem.quantity * rentalDuration * 7) /
+        (orderItem.product.price * orderItem.quantity * rentalDuration * 7) /
         60;
     });
     return totalPrice;
+  }
+
+  setOrderItems(orderItems: OrderItem[]): void {
+    this.orderItemsSubject.next(orderItems);
+  }
+
+  private updateOrderItems(): void {
+    this.orderItemsSubject.next(this.orderItemsSubject.getValue());
   }
 }

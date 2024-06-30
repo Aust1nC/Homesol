@@ -28,9 +28,6 @@ export class InfoComponent implements OnInit {
         }
       },
     });
-    // if (this.currentUser) {
-    //   this.setFormValues(this.currentUser);
-    // }
   }
 
   bioSection = new FormGroup({
