@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { OrderItem } from '../../models/order.model';
+import { Order, OrderItem } from '../../models/order.model';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../../models/product.model';
-import { map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:3000/product';
-  private defaultQuantity = 1;
+  // private apiUrl = 'http://localhost:3000/order';
+  private apiUrl = `${environment.apiUrl}/order`;
   private orderItemsSubject = new BehaviorSubject<OrderItem[]>([]);
 
   orderItems$ = this.orderItemsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  fetchProducts(): Observable<OrderItem[]> {
-    return this.http.get<Product[]>(this.apiUrl).pipe(
-      map((products: Product[]) => {
-        return products.map((product) => ({
-          product,
-          quantity: this.defaultQuantity,
-        }));
-      })
-    );
+  createOrder(newOrder: Order): Observable<Order> {
+    return this.http.post<Order>(`${this.apiUrl}/create`, newOrder);
   }
 
   increaseQuantity(orderItem: OrderItem): void {
@@ -51,7 +43,7 @@ export class OrderService {
         (orderItem.product.price * orderItem.quantity * rentalDuration * 7) /
         60;
     });
-    return totalPrice;
+    return Math.round(totalPrice);
   }
 
   setOrderItems(orderItems: OrderItem[]): void {

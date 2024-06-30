@@ -9,6 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './features/home/home.module';
 import { SelectModule } from './features/select/select.module';
 import { AuthenticateModule } from './features/authenticate/authenticate.module';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { AuthenticateModule } from './features/authenticate/authenticate.module'
     HomeModule,
     SelectModule,
     AuthenticateModule,
+    NgxStripeModule.forRoot(),
   ],
   providers: [provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],

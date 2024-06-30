@@ -1,4 +1,5 @@
 import { Product } from './product.model';
+import { User } from './user.model';
 
 export interface OrderItem {
   product: Product;
@@ -13,10 +14,11 @@ export interface Address {
 }
 
 export interface Order {
-  id: string;
-  customer: string;
+  id?: string;
+  user: User;
   items: OrderItem[];
   orderDate: Date;
   address: Address;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
+  price: Number;
 }

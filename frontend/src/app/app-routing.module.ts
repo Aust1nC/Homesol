@@ -32,11 +32,20 @@ const routes: Routes = [
       ),
   },
 
+  // User routes
   {
     path: 'user',
     component: NoHeaderFooterLayoutComponent,
     loadChildren: () =>
       import('./features/user/user.module').then((m) => m.UserModule),
+  },
+
+  // Checkout routes
+  {
+    path: 'checkout',
+    component: NoHeaderFooterLayoutComponent,
+    loadChildren: () =>
+      import('./features/payment/payment.module').then((m) => m.PaymentModule),
   },
   { path: '**', redirectTo: '' },
 ];

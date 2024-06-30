@@ -4,12 +4,14 @@ import { BehaviorSubject, Observable, interval } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User, UserResponse } from '../../models/user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  // private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject: BehaviorSubject<UserResponse | null>;
   public currentUser: Observable<UserResponse | null>;
   private checkInterval = 60 * 1000;

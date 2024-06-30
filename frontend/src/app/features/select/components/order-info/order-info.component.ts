@@ -5,6 +5,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User, UserResponse } from '../../../../core/models/user.model';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { counties } from '../../../../core/data/county';
+import { HttpClient } from '@angular/common/http';
+import { loadStripe } from '@stripe/stripe-js';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-order-info',
@@ -18,15 +21,25 @@ export class OrderInfoComponent implements OnInit {
   counties: string[] = counties;
   showDropdown: boolean = false;
 
+  private apiUrl = environment.apiUrl;
   private currentUser: Partial<UserResponse | null> = {};
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
+    this.authService.currentUser.subscribe({
+      next: (user) => {
+        this.currentUser = user;
+        if (user) {
+          this.setFormValues(user);
+        }
+      },
+    });
 
     const storedOrderItems = localStorage.getItem('orderItems');
     if (storedOrderItems) {
@@ -48,6 +61,14 @@ export class OrderInfoComponent implements OnInit {
     postcode: new FormControl<string>('', [Validators.required]),
   });
 
+  private setFormValues(user: UserResponse): void {
+    this.deliveryForm.patchValue({
+      firstName: user.me.firstName,
+      lastName: user.me.lastName,
+      email: user.me.email,
+    });
+  }
+
   selectCounty(county: string) {
     this.deliveryForm.get('county')?.setValue(county);
     this.showDropdown = false;
@@ -55,5 +76,52 @@ export class OrderInfoComponent implements OnInit {
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+  }
+
+  onCreateOrder(): void {
+    if (this.currentUser && this.deliveryForm.valid) {
+      const newOrder = {
+        user: this.currentUser.me as User,
+        items: this.orderItems,
+        orderDate: new Date(),
+        address: {
+          street: this.deliveryForm.value.street || '',
+          city: this.deliveryForm.value.city || '',
+          county: this.deliveryForm.value.county || '',
+          postcode: this.deliveryForm.value.postcode || '',
+        },
+        status: 'Pending' as 'Pending',
+        price: this.totalPrice,
+      };
+
+      this.orderService.createOrder(newOrder).subscribe({
+        next: () => {
+          console.log('Order created');
+        },
+        error: (err) => {
+          console.log('Error creating order', err);
+        },
+      });
+    }
+  }
+
+  onCheckout(): void {
+    this.http
+      .post(
+        `${this.apiUrl}/checkout`,
+        {
+          items: this.orderItems,
+          rentalDuration: this.rentalDuration,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' }, // Ensure correct Content-Type
+        }
+      )
+      .subscribe(async (res: any) => {
+        let stripe = await loadStripe(environment.stripePublicKey);
+        stripe?.redirectToCheckout({
+          sessionId: res.id,
+        });
+      });
   }
 }

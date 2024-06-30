@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../../../core/services/order/order.service';
 import { OrderItem } from '../../../../core/models/order.model';
 import { Router } from '@angular/router';
+import { OrderService } from '../../../../core/services/order/order.service';
+import { ProductService } from '../../../../core/services/product/product.service';
 
 @Component({
   selector: 'app-pricing',
@@ -17,14 +18,18 @@ export class PricingComponent implements OnInit {
   inventory: OrderItem[] = [];
   orderItems: OrderItem[] = [];
 
-  constructor(private orderService: OrderService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private orderService: OrderService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchInventory();
   }
 
   fetchInventory(): void {
-    this.orderService.fetchProducts().subscribe({
+    this.productService.fetchProducts().subscribe({
       next: (data) => {
         this.inventory = data;
         this.getOrderItems();

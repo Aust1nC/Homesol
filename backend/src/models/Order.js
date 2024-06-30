@@ -54,6 +54,10 @@ const OrderSchema = new Schema({
     enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
     default: "Pending",
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
