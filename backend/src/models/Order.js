@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const Schema = mongoose.Schema;
 
@@ -58,6 +59,18 @@ const OrderSchema = new Schema({
     type: Number,
     required: true,
   },
+  referenceNumber: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+});
+
+OrderSchema.pre("save", function (next) {
+  if (this.isNew) {
+    this.referenceNumber = uuidv4();
+  }
+  next();
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

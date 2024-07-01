@@ -78,7 +78,7 @@ export class OrderInfoComponent implements OnInit {
     this.showDropdown = !this.showDropdown;
   }
 
-  onCreateOrder(): void {
+  createOrder(): void {
     if (this.currentUser && this.deliveryForm.valid) {
       const newOrder = {
         user: this.currentUser.me as User,

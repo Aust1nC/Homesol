@@ -21,4 +21,5 @@ export interface Order {
   address: Address;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
   price: Number;
+  referenceNumber?: string;
 }
