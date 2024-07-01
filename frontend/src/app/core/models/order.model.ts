@@ -14,12 +14,11 @@ export interface Address {
 }
 
 export interface Order {
-  id?: string;
+  _id: string;
   user: User;
   items: OrderItem[];
   orderDate: Date;
   address: Address;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
   price: Number;
-  referenceNumber?: string;
 }

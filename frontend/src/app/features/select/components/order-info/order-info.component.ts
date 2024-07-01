@@ -78,33 +78,6 @@ export class OrderInfoComponent implements OnInit {
     this.showDropdown = !this.showDropdown;
   }
 
-  createOrder(): void {
-    if (this.currentUser && this.deliveryForm.valid) {
-      const newOrder = {
-        user: this.currentUser.me as User,
-        items: this.orderItems,
-        orderDate: new Date(),
-        address: {
-          street: this.deliveryForm.value.street || '',
-          city: this.deliveryForm.value.city || '',
-          county: this.deliveryForm.value.county || '',
-          postcode: this.deliveryForm.value.postcode || '',
-        },
-        status: 'Pending' as 'Pending',
-        price: this.totalPrice,
-      };
-
-      this.orderService.createOrder(newOrder).subscribe({
-        next: () => {
-          console.log('Order created');
-        },
-        error: (err) => {
-          console.log('Error creating order', err);
-        },
-      });
-    }
-  }
-
   onCheckout(): void {
     this.http
       .post(
@@ -112,6 +85,13 @@ export class OrderInfoComponent implements OnInit {
         {
           items: this.orderItems,
           rentalDuration: this.rentalDuration,
+          userId: this.currentUser?.me?._id,
+          address: {
+            street: this.deliveryForm.value.street || '',
+            city: this.deliveryForm.value.city || '',
+            county: this.deliveryForm.value.county || '',
+            postcode: this.deliveryForm.value.postcode || '',
+          },
         },
         {
           headers: { 'Content-Type': 'application/json' }, // Ensure correct Content-Type

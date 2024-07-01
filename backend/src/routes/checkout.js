@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
+// Create Strip session
 router.post("/", async (req, res, next) => {
   try {
-    const { items, rentalDuration } = req.body;
+    const { items, rentalDuration, userId, address } = req.body;
 
     const line_items = items.map((item) => ({
       price_data: {
@@ -22,8 +23,15 @@ router.post("/", async (req, res, next) => {
       payment_method_types: ["card"],
       line_items: line_items,
       mode: "payment",
-      success_url: `${process.env.CLIENT_URL}/checkout/success`,
+      success_url: `${process.env.CLIENT_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}/order/delivery`,
+      metadata: {
+        userId: userId,
+        street: address.street,
+        city: address.city,
+        county: address.county,
+        postcode: address.postcode,
+      },
     });
 
     res.json({ id: session.id });
