@@ -9,16 +9,31 @@
       ></div>
     </div>
     <div class="lg:w-1/2 p-6 sm:p-12">
-      <div>
+      <div class="flex justify-center lg:justify-start">
         <a routerLink="/"><img src="Logo.png" class="w-20 mx-auto" /> </a>
       </div>
-      <div class="mt-12 flex flex-col items-center">
-        <h1 class="text-2xl xl:text-3xl font-extrabold">Thank you!</h1>
+      <div class="mt-12 lg:mt-20 flex flex-col">
+        <div
+          class="flex flex-col justify-center items-center lg:items-start text-center"
+        >
+          <h1 class="text-xl xl:text-2xl font-bold w-auto">
+            Thank you! Your order has been received.
+          </h1>
+          <p class="mt-4 text-center lg:text-left font-semibold">
+            Your order number is
+            <span class="font-bold">{{ referenceId }}</span>
+          </p>
+          <p class="mt-4 text-center lg:text-left font-semibold">
+            You will receive an order confirmation by e-mail with information
+            about your order.
+          </p>
+        </div>
 
         <div class="w-full flex-1 mt-8">
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center lg:items-start">
             <button
-              class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+              class="w-[40%] max-w-xs font-semibold shadow-sm rounded-md py-3 bg-[#e0f2fe] text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+              routerLink="/"
             >
               Back to Home
             </button>
@@ -27,16 +42,29 @@
           <div class="my-12 border-b text-center"></div>
 
           <div class="mx-auto max-w-xs">
-            <p class="mt-6 text-xs text-gray-600 text-center">
-              I agree to abide by Homesol's
-              <a href="#" class="border-b border-gray-500 border-dotted">
-                Terms of Service
-              </a>
-              and its
-              <a href="#" class="border-b border-gray-500 border-dotted">
-                Privacy Policy
-              </a>
-            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="fill-[#6b7280]"
+            >
+              <path
+                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+              ></path>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="fill-[#6b7280]"
+            >
+              <path
+                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+              ></path>
+            </svg>
+            <p class="mt-6 text-xs text-gray-600 text-center"></p>
           </div>
         </div>
       </div>
