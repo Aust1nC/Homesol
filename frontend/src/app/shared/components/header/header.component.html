@@ -27,7 +27,7 @@
     >
       Sign up
     </button>
-    <div class="dropdown pr-12 lg:pr-20" *ngIf="authService.currentUserValue">
+    <div class="dropdown md:pr-12" *ngIf="authService.currentUserValue">
       <div class="hover-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@
       </div>
       <ul
         tabindex="0"
-        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36 outline outline-1 outline-[#d4d4d4]"
+        class="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-36 outline outline-1 outline-[#d4d4d4] ml-[-50px] md:mr-2"
       >
         <li><a routerLink="user/profile">Profile</a></li>
         <hr class="my-1 border-t border-gray-300" />

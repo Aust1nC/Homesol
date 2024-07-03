@@ -79,29 +79,31 @@ export class OrderInfoComponent implements OnInit {
   }
 
   onCheckout(): void {
-    this.http
-      .post(
-        `${this.apiUrl}/checkout`,
-        {
-          items: this.orderItems,
-          rentalDuration: this.rentalDuration,
-          userId: this.currentUser?.me?._id,
-          address: {
-            street: this.deliveryForm.value.street || '',
-            city: this.deliveryForm.value.city || '',
-            county: this.deliveryForm.value.county || '',
-            postcode: this.deliveryForm.value.postcode || '',
+    if (this.deliveryForm.valid) {
+      this.http
+        .post(
+          `${this.apiUrl}/checkout`,
+          {
+            items: this.orderItems,
+            rentalDuration: this.rentalDuration,
+            userId: this.currentUser?.me?._id,
+            address: {
+              street: this.deliveryForm.value.street || '',
+              city: this.deliveryForm.value.city || '',
+              county: this.deliveryForm.value.county || '',
+              postcode: this.deliveryForm.value.postcode || '',
+            },
           },
-        },
-        {
-          headers: { 'Content-Type': 'application/json' }, // Ensure correct Content-Type
-        }
-      )
-      .subscribe(async (res: any) => {
-        let stripe = await loadStripe(environment.stripePublicKey);
-        stripe?.redirectToCheckout({
-          sessionId: res.id,
+          {
+            headers: { 'Content-Type': 'application/json' }, // Ensure correct Content-Type
+          }
+        )
+        .subscribe(async (res: any) => {
+          let stripe = await loadStripe(environment.stripePublicKey);
+          stripe?.redirectToCheckout({
+            sessionId: res.id,
+          });
         });
-      });
+    }
   }
 }
