@@ -1,6 +1,8 @@
 const Order = require("../models/Order");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const Product = require("../models/Product");
+const User = require("../models/User");
+const sendMail = require("../util/smtp");
 
 let OrderController = {
   create: async (req, res) => {
@@ -37,7 +39,9 @@ let OrderController = {
         price: amount_total / 100,
       });
 
-      res.status(200).json(newOrder);
+      const user = await User.findById(metadata.userId);
+      const subject = "Homesol - Your Order Confirmation";
+      const text = res.status(200).json(newOrder);
     } catch (error) {
       console.log("Error craeting order:", error);
       res.status(500).send({ message: error.message });
