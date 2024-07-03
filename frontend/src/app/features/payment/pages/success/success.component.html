@@ -1,4 +1,10 @@
-<div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+<div *ngIf="isLoading">
+  <p>Loading...</p>
+</div>
+<div
+  class="min-h-screen bg-gray-100 text-gray-900 flex justify-center"
+  *ngIf="!isLoading"
+>
   <div
     class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1"
   >
@@ -38,9 +44,9 @@
           </div>
 
           <div class="my-12 border-b text-center"></div>
-          <div class="text-center">
-            <h1 class="font-semibold">Follow us on</h1>
-          </div>
+          <div class="text-center"></div>
+          <h1 class="font-light text-center mt-6">Follow us on</h1>
+
           <div class="flex justify-evenly mt-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"

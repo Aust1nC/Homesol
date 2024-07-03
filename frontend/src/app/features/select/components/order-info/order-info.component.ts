@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from './../../../../core/services/order/order.service';
 import { OrderItem } from '../../../../core/models/order.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User, UserResponse } from '../../../../core/models/user.model';
+import { UserResponse } from '../../../../core/models/user.model';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { counties } from '../../../../core/data/county';
 import { HttpClient } from '@angular/common/http';
@@ -24,11 +23,7 @@ export class OrderInfoComponent implements OnInit {
   private apiUrl = environment.apiUrl;
   private currentUser: Partial<UserResponse | null> = {};
 
-  constructor(
-    private orderService: OrderService,
-    private authService: AuthService,
-    private http: HttpClient
-  ) {}
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;

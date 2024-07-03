@@ -10,7 +10,6 @@ import { environment } from '../../../../environments/environment.development';
   providedIn: 'root',
 })
 export class AuthService {
-  // private apiUrl = 'http://localhost:3000/auth';
   private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject: BehaviorSubject<UserResponse | null>;
   public currentUser: Observable<UserResponse | null>;
@@ -26,7 +25,7 @@ export class AuthService {
   }
 
   private validateTokenOnStartup(): void {
-    const token = this.getToekn();
+    const token = this.getToken();
     if (!token || this.tokenExpired(token)) {
       this.logout();
     }
@@ -41,14 +40,14 @@ export class AuthService {
     }
   }
 
-  private getToekn(): string {
+  private getToken(): string {
     return this.currentUserValue?.token || '';
   }
 
   private startTokenExpiryCheck(): void {
     interval(this.checkInterval).subscribe({
       next: () => {
-        const token = this.getToekn();
+        const token = this.getToken();
         if (this.tokenExpired(token)) {
           this.logout();
         }
@@ -98,14 +97,14 @@ export class AuthService {
     });
   }
 
+  // Update user info in profile page
   update(id: string, userData: Partial<User>): Observable<UserResponse> {
     return this.http
       .patch<UserResponse>(`${this.apiUrl}/update/${id}`, userData)
       .pipe(
         tap({
           next: (updatedUser) => {
-            console.log('Updated User:', updatedUser);
-            const currentToken = this.getToekn();
+            const currentToken = this.getToken();
 
             const updatedUserWithToken = {
               me: updatedUser.me,
@@ -115,7 +114,6 @@ export class AuthService {
               'currentUser',
               JSON.stringify(updatedUserWithToken)
             );
-            console.log(JSON.stringify(updatedUserWithToken));
             this.currentUserSubject.next(updatedUserWithToken);
           },
           error: (error) => {
@@ -123,6 +121,17 @@ export class AuthService {
           },
         })
       );
+  }
+
+  // Update user after an order is created
+  updateCurrentUser(updatedUser: User): void {
+    const currentToken = this.getToken();
+    const updatedUserWithToken = {
+      me: updatedUser,
+      token: currentToken,
+    };
+    localStorage.setItem('currentUser', JSON.stringify(updatedUserWithToken));
+    this.currentUserSubject.next(updatedUserWithToken);
   }
 
   logout(): void {

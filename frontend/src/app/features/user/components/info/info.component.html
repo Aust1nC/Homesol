@@ -90,6 +90,37 @@
             >Last name is required.</small
           >
         </div>
+        <label
+          for="email"
+          class="block text-gray-700 text-md font-bold mb-2 mt-4"
+        >
+          Email Address
+        </label>
+        <input
+          id="email"
+          formControlName="email"
+          type="name"
+          class="border bg-gray-50 border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+          required
+        />
+        <div
+          *ngIf="
+            bioSection.controls.email.invalid &&
+            (bioSection.controls.email.dirty ||
+              bioSection.controls.email.touched)
+          "
+        >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.email?.errors?.['required']"
+            >Email address is required.</small
+          >
+          <small
+            class="text-red-500"
+            *ngIf="bioSection.controls.email?.errors?.['email']"
+            >Email address is invalid.</small
+          >
+        </div>
 
         <label
           for="createdAt"

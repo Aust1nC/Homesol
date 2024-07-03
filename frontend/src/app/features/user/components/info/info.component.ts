@@ -37,6 +37,7 @@ export class InfoComponent implements OnInit {
     ]),
     firstName: new FormControl<string>('', [Validators.required]),
     lastName: new FormControl<string>('', [Validators.required]),
+    email: new FormControl<string>('', [Validators.required, Validators.email]),
     createdAt: new FormControl<string>(''),
   });
 
@@ -51,6 +52,7 @@ export class InfoComponent implements OnInit {
       username: user.me.username,
       firstName: user.me.firstName,
       lastName: user.me.lastName,
+      email: user.me.email,
       createdAt: user.me.createdAt
         ? new Date(user.me.createdAt).toISOString().split('T')[0]
         : '',
@@ -81,6 +83,7 @@ export class InfoComponent implements OnInit {
         username: this.bioSection.get('username')?.value || '',
         firstName: this.bioSection.get('firstName')?.value || '',
         lastName: this.bioSection.get('lastName')?.value || '',
+        email: this.bioSection.get('email')?.value || '',
       };
 
       this.authService

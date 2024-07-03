@@ -31,6 +31,7 @@ router.post("/", async (req, res, next) => {
         city: address.city,
         county: address.county,
         postcode: address.postcode,
+        rentalDuration: rentalDuration,
       },
     });
 
