@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Order, OrderItem } from '../../models/order.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  // private apiUrl = 'http://localhost:3000/order';
   private apiUrl = `${environment.apiUrl}/order`;
   private orderItemsSubject = new BehaviorSubject<OrderItem[]>([]);
 
   orderItems$ = this.orderItemsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  createOrder(newOrder: Order): Observable<Order> {
-    return this.http.post<Order>(`${this.apiUrl}/create`, newOrder);
+  // createOrder(newOrder: Order): Observable<Order> {
+  //   return this.http.post<Order>(`${this.apiUrl}/create`, newOrder);
+  // }
+
+  getUserOrders(): Observable<Order> {
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${currentUser.token}`,
+      });
+      return this.http.get<Order>(`${this.apiUrl}/get`, { headers });
+    } else {
+      throw new Error('User is not authentiacted.');
+    }
   }
 
   increaseQuantity(orderItem: OrderItem): void {

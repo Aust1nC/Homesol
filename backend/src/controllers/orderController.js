@@ -3,6 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const Product = require("../models/Product");
 const User = require("../models/User");
 const sendMail = require("../util/smtp");
+const { inspect } = require("util");
 
 let OrderController = {
   create: async (req, res) => {
@@ -28,6 +29,21 @@ let OrderController = {
     } catch (error) {
       console.log("Error craeting order:", error);
       res.status(500).send({ message: error.message });
+    }
+  },
+
+  get: async (req, res) => {
+    try {
+      const orders = await Order.findOne({ user: req.user._id })
+        .populate({
+          path: "items.product",
+          select: "name category",
+        })
+        .exec();
+      res.json(orders);
+    } catch (error) {
+      console.log(error);
+      res.status(401).send({ message: error.message });
     }
   },
 };

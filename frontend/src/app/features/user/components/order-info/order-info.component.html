@@ -1,1 +1,68 @@
-<p>order-info works!</p>
+<div class="flex flex-col">
+  <div class="flex">
+    <h1 class="text-4xl text-left">My Orders</h1>
+  </div>
+  <div *ngIf="loading" class="text-center">Loading...</div>
+  <!-- Display loading indicator -->
+  <div *ngIf="!loading && !order">No orders found.</div>
+  <!-- Display if no orders are found -->
+  <div *ngIf="!loading && order">
+    <div class="bg-white w-full shadow-lg mt-5 rounded-lg">
+      <div class="m-8 pt-4 text-left">
+        <label class="block text-gray-700 text-md font-bold mb-2"
+          >Order ID</label
+        >
+        <p
+          class="border bg-white border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+        >
+          {{ order._id }}
+        </p>
+        <label class="block text-gray-700 text-md font-bold mb-2 mt-4"
+          >Order Date</label
+        >
+        <p
+          class="border bg-white border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+        >
+          {{ order.orderDate | date : "fullDate" }}
+        </p>
+        <label class="block text-gray-700 text-md font-bold mb-2 mt-4"
+          >Status</label
+        >
+        <p
+          class="border bg-white border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+        >
+          {{ order.status }}
+        </p>
+        <label class="block text-gray-700 text-md font-bold mb-2 mt-4"
+          >Address</label
+        >
+        <p
+          class="border bg-white border-gray-300 p-2 mt-1 block rounded-lg w-[65%]"
+        >
+          {{ order.address.street }}, {{ order.address.city }},
+          {{ order.address.county }}, {{ order.address.postcode }}
+        </p>
+      </div>
+      <label class="text-gray-700 text-lg font-bold mb-2 mt-4"
+        >Order Items</label
+      >
+      <div *ngIf="!loading && order" class="flex justify-centre m-4">
+        <table class="table-auto w-full">
+          <thead>
+            <tr>
+              <th class="border px-4 py-2">Product Name</th>
+              <th class="border px-4 py-2">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.items">
+              <td class="border px-4 py-2">{{ item.product.name }}</td>
+              <td class="border px-4 py-2">{{ item.quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="h-16"></div>
+    </div>
+  </div>
+</div>
