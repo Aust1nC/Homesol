@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './features/home/pages/home/home.component';
 import { HeaderFooterLayoutComponent } from './shared/layouts/header-footer-layout/header-footer-layout.component';
 import { NoHeaderFooterLayoutComponent } from './shared/layouts/no-header-footer-layout/no-header-footer-layout.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   // Default route for home
@@ -36,6 +37,7 @@ const routes: Routes = [
   {
     path: 'user',
     component: NoHeaderFooterLayoutComponent,
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./features/user/user.module').then((m) => m.UserModule),
   },

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SelectComponent } from './pages/select/select.component';
 import { DeliveryComponent } from './pages/delivery/delivery.component';
+import { authGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'delivery',
+    canActivate: [authGuard],
     component: DeliveryComponent,
   },
 ];
