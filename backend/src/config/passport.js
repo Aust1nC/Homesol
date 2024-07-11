@@ -100,11 +100,11 @@ passport.use(
     async (accessToken, refreshToken, profile, email, done) => {
       try {
         let oldUser = await User.findOne({ googleId: email.id });
-        // console.log("profile: ", profile);
-        // console.log("email: ", email);
+        console.log("profile: ", profile);
+        console.log("email: ", email);
 
         if (oldUser) {
-          // console.log("User found", oldUser);
+          console.log("User found", oldUser);
           return done(null, oldUser);
         }
       } catch (err) {
@@ -117,9 +117,9 @@ passport.use(
           username: email.displayName,
         }).save();
         done(null, newUser);
-        // console.log("User created", newUser);
+        console.log("User created", newUser);
       } catch (error) {
-        // console.log("Error ", error);
+        console.log("Error ", error);
         done(error, false);
       }
     }
