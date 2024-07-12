@@ -3,9 +3,7 @@ const sinon = require("sinon");
 const app = require("../server");
 const Product = require("../models/Product");
 const ProductController = require("../controllers/productController");
-
-require("dotenv").config({ path: "../../.env" });
-console.log(process.env.JWT_SECRET);
+const request = require("supertest");
 
 describe("ProductController", () => {
   describe("all", () => {
@@ -14,13 +12,13 @@ describe("ProductController", () => {
         { name: "Product 1", price: 10, category: "kitchen" },
         { name: "Product 2", price: 20, category: "technology" },
       ];
+
+      // Stub the Product.find method to return mockProducts
       const findStub = sinon.stub(Product, "find").resolves(mockProducts);
 
       try {
-        const res = await app.inject({
-          method: "GET",
-          url: "/product",
-        });
+        // Use supertest to make a request to your app
+        const res = await request(app).get("/product");
 
         assert.strictEqual(res.status, 200);
         assert(Array.isArray(res.body));
@@ -32,15 +30,16 @@ describe("ProductController", () => {
 
     it("should handle errors", async () => {
       const errorMessage = "Database error";
+
+      // Stub the Product.find method to throw an error
       const findStub = sinon
         .stub(Product, "find")
-        .rejects(new Error(errorMessage));
+        .throws(new Error(errorMessage));
 
       try {
-        const res = await app.inject({
-          method: "GET",
-          url: "/product",
-        });
+        // Use supertest to make a request to your app
+        const res = await request(app).get("/product");
+
         assert.strictEqual(res.status, 500);
         assert.strictEqual(res.body.message, errorMessage);
       } finally {

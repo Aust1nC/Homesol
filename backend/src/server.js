@@ -6,7 +6,7 @@ const connectDB = require("./config/db.js");
 const bodyParser = require("body-parser");
 const passport = require("./config/passport");
 
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: __dirname + "/.env" });
 
 const PORT = process.env.PORT;
 const CLIENT_URL = process.env.CLIENT_URL;

@@ -4,7 +4,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const User = require("../models/User");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: __dirname + "/../../.env" });
 
 passport.use(
   "register",
