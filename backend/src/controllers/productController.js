@@ -58,9 +58,9 @@ let ProductController = {
       let id = req.params.id;
       let result = await Product.deleteOne({ _id: id });
       if (result.deletedCount === 0) {
-        return res.status(404).send({ error: "Product not found." });
+        return res.status(404).send({ message: "Product not found" });
       }
-      res.json({ message: "Product deleted." });
+      res.status(200).send({ message: "Product deleted" });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
