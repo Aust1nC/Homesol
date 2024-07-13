@@ -139,14 +139,25 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
+  getUserDetails() {
+    return this.http.get(`${this.apiUrl}/user-details`, {
+      withCredentials: true,
+    });
+  }
+
   googleLogin(): void {
     window.location.href = `${this.apiUrl}/google`;
   }
 
-  handleGoogleCallback(token: string, user: UserResponse) {
-    const userWithToken = { ...user, token };
-    localStorage.setItem('currentUser', JSON.stringify(userWithToken));
-    this.currentUserSubject.next(userWithToken);
-    this.router.navigate(['/']);
+  handleGoogleCallback(): void {
+    this.getUserDetails().subscribe((res: any) => {
+      const userWithToken = {
+        me: res.me,
+        token: res.token,
+      };
+      localStorage.setItem('currentUser', JSON.stringify(userWithToken));
+      this.currentUserSubject.next(userWithToken);
+      this.router.navigate(['/']);
+    });
   }
 }

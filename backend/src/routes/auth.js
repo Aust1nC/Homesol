@@ -7,5 +7,6 @@ router.patch("/update/:id", authController.updateUser);
 router.post("/logout", authController.logoutUser);
 router.get("/google", authController.googleAuth);
 router.get("/google/callback", authController.googleAuthCallback);
+router.get("/user-details", authController.getUserDetails);
 
 module.exports = router;

@@ -20,7 +20,7 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.log("Failed to authenticate token:", error);
-    res.status(401).send({ message: "Failed to authenticate token." });
+    res.status(401).send({ message: "Failed to authenticate token" });
   }
 };
 

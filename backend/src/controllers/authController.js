@@ -1,7 +1,8 @@
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-clientUrl = "http://localhost:4200";
+clientUrl = process.env.CLIENT_URL;
 
 let authController = {
   loginUser: (req, res, next) => {
@@ -11,7 +12,6 @@ let authController = {
         return next(err);
       }
       const token = user.generateJWT();
-      // const me = user.toJSON();
       const me = {
         _id: user._id,
         username: user.username,
@@ -88,9 +88,44 @@ let authController = {
           return res.redirect(`${clientUrl}/login`);
         }
         const token = user.generateJWT();
-        return res.json({ user, token });
+        res.cookie("token", token, { httpOnly: true });
+        return res.redirect(`${clientUrl}/auth/auth-callback`);
       }
     )(req, res, next);
+  },
+
+  getUserDetails: async (req, res) => {
+    try {
+      const token = req.cookies.token;
+      if (!token) {
+        return res.status(401).json({ message: "No token found" });
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      const user = await User.findById(decoded._id);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({
+        me: {
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          createdAt: user.createdAt,
+          subscription: user.subscription,
+          startDate: user.startDate,
+          endDate: user.endDate,
+        },
+        token,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+    }
   },
 };
 

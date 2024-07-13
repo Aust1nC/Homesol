@@ -25,7 +25,7 @@ describe("ProductController", () => {
       ];
 
       // Stub the Product.find method to return mockProducts
-      findStub = sinon.stub(Product, "find").resolves(mockProducts);
+      const findStub = sinon.stub(Product, "find").resolves(mockProducts);
 
       const res = await request(app).get("/product");
 
@@ -36,7 +36,9 @@ describe("ProductController", () => {
 
     it("should handle errors", async () => {
       // Stub the Product.find method to throw an error
-      findStub = sinon.stub(Product, "find").throws(new Error(errorMessage));
+      const findStub = sinon
+        .stub(Product, "find")
+        .throws(new Error(errorMessage));
 
       const res = await request(app).get("/product");
 
@@ -48,7 +50,9 @@ describe("ProductController", () => {
   describe("find", () => {
     it("should return a product by id", async () => {
       // Stub the Product.findById method to return mockProduct
-      findByIdStub = sinon.stub(Product, "findById").resolves(mockProduct);
+      const findByIdStub = sinon
+        .stub(Product, "findById")
+        .resolves(mockProduct);
 
       const res = await request(app).get(`/product/${mockProduct._id}`);
 
@@ -58,7 +62,7 @@ describe("ProductController", () => {
 
     it("should return 404 if product not found", async () => {
       // Stub the Product.findById method to return null
-      findByIdStub = sinon.stub(Product, "findById").resolves(null);
+      const findByIdStub = sinon.stub(Product, "findById").resolves(null);
 
       const res = await request(app).get(`/product/1`);
 
@@ -68,7 +72,7 @@ describe("ProductController", () => {
 
     it("should handle errors", async () => {
       // Stub the Product.findById method to throw an error
-      findByIdStub = sinon
+      const findByIdStub = sinon
         .stub(Product, "findById")
         .throws(new Error(errorMessage));
 
@@ -82,7 +86,9 @@ describe("ProductController", () => {
   describe("create", () => {
     it("should create a product", async () => {
       // Stub the save method of Product prototype to resolve with mockProduct
-      createStub = sinon.stub(Product.prototype, "save").resolves(mockProduct);
+      const createStub = sinon
+        .stub(Product.prototype, "save")
+        .resolves(mockProduct);
 
       const res = await request(app).post("/product").send(mockProduct);
 
@@ -92,7 +98,7 @@ describe("ProductController", () => {
 
     it("should handle errors during creation", async () => {
       // Stub the save method of Product prototype to throw an error
-      createStub = sinon
+      const createStub = sinon
         .stub(Product.prototype, "save")
         .throws(new Error(errorMessage));
 
@@ -105,11 +111,13 @@ describe("ProductController", () => {
 
   describe("update", () => {
     it("should update a product", async () => {
-      findByIdStub = sinon.stub(Product, "findById").resolves(mockProduct);
+      const findByIdStub = sinon
+        .stub(Product, "findById")
+        .resolves(mockProduct);
 
       const updatedProduct = { ...mockProduct, name: "Updated Product 1" };
 
-      findOneAndUpdateStub = sinon
+      const findOneAndUpdateStub = sinon
         .stub(Product, "findOneAndUpdate")
         .resolves(updatedProduct);
 
@@ -122,7 +130,7 @@ describe("ProductController", () => {
     });
 
     it("should return 404 if product not found", async () => {
-      findByIdStub = sinon.stub(Product, "findById").resolves(null);
+      const findByIdStub = sinon.stub(Product, "findById").resolves(null);
 
       const res = await request(app)
         .patch(`/product/1`)
@@ -133,7 +141,7 @@ describe("ProductController", () => {
     });
 
     it("should handle errors", async () => {
-      findByIdStub = sinon
+      const findByIdStub = sinon
         .stub(Product, "findById")
         .throws(new Error(errorMessage));
 
@@ -148,7 +156,7 @@ describe("ProductController", () => {
 
   describe("delete", () => {
     it("should delete a product", async () => {
-      deleteOneStub = sinon
+      const deleteOneStub = sinon
         .stub(Product, "deleteOne")
         .resolves({ deletedCount: 1 });
 
@@ -159,7 +167,7 @@ describe("ProductController", () => {
     });
 
     it("should return 404 if product not found", async () => {
-      deleteOneStub = sinon
+      const deleteOneStub = sinon
         .stub(Product, "deleteOne")
         .resolves({ deletedCount: 0 });
 
@@ -170,7 +178,7 @@ describe("ProductController", () => {
     });
 
     it("should handle errors", async () => {
-      deleteOneStub = sinon
+      const deleteOneStub = sinon
         .stub(Product, "deleteOne")
         .throws(new Error(errorMessage));
 

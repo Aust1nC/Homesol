@@ -10,7 +10,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   { path: 'signup', component: SignupComponent },
-  { path: 'callback', component: GoogleCallbackComponent },
+  { path: 'auth-callback', component: GoogleCallbackComponent },
 ];
 
 @NgModule({
