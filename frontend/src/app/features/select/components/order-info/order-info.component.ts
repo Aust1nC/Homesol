@@ -7,6 +7,7 @@ import { counties } from '../../../../core/data/county';
 import { HttpClient } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
 import { environment } from '../../../../../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-info',
@@ -23,7 +24,11 @@ export class OrderInfoComponent implements OnInit {
   private apiUrl = environment.apiUrl;
   private currentUser: Partial<UserResponse | null> = {};
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -74,7 +79,7 @@ export class OrderInfoComponent implements OnInit {
   }
 
   onCheckout(): void {
-    if (this.deliveryForm.valid) {
+    if (this.deliveryForm.valid && this.currentUser) {
       this.http
         .post(
           `${this.apiUrl}/checkout`,
@@ -99,6 +104,8 @@ export class OrderInfoComponent implements OnInit {
             sessionId: res.id,
           });
         });
+    } else {
+      this.router.navigate(['/auth/login']);
     }
   }
 }
